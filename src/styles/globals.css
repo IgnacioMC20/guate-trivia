@@ -86,17 +86,17 @@ body {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: #9BF6FF; /* Fondo detrás del div que contiene el login */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 a {
-  color: inherit;
+  color: rgb(0, 140, 255);
   text-decoration: none;
 }
 
@@ -105,3 +105,8 @@ a {
     color-scheme: dark;
   }
 }
+
+form {
+  display: inline-block;
+}
+

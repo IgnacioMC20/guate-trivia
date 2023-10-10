@@ -1,0 +1,43 @@
+/* styles.css */
+  .logincontainer {
+    background-color: #fdffb6; /* Fondo del div que contiene el login */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 30vh;
+    border: solid black;
+    
+  }
+  
+  .logincontent {
+    text-align: center;    
+   
+  }
+  
+  .formgroup {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+   
+
+  .alerta{
+    background-color: red;
+  }
+  
+  .labelset{
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: black;
+  }
+
+  .imgStyle{
+    border: solid black ;
+    
+  }
+  
