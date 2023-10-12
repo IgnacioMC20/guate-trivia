@@ -1,0 +1,12 @@
+/* Estilo base de la imagen */
+.image-container {
+    cursor: pointer;
+    border: 2px solid transparent;
+    padding: 5px;
+  }
+  
+  /* Estilo cuando la imagen está seleccionada */
+  .image-container.selected {
+    border: 2px solid #A0C4FF; /* Puedes cambiar el color a tu preferencia */
+  }
+  

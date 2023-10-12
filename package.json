@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -14,8 +15,10 @@
     "@mui/icons-material": "^5.14.13",
     "@mui/material": "^5.14.13",
     "next": "13.5.4",
+    "next-auth": "^4.23.2",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hook-form": "^7.47.0"
   },
   "devDependencies": {
     "@types/node": "^20",

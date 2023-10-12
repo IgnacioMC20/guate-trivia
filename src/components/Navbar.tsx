@@ -6,7 +6,7 @@ export const Navbar = () => {
     const router = useRouter()
 
     return (
-        <AppBar sx={{ backgroundColor: '#BDE3FF'}}>
+        <AppBar sx={{ backgroundColor: '#A0C4FF'}}>
             <Toolbar>
                 <NextLink href={'/'} passHref legacyBehavior>
                     <Link display={'flex'} alignItems={'center'}>
