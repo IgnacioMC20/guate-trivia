@@ -1,40 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Guía para Levantar el Proyecto con Docker
 
-## Getting Started
+Este proyecto utiliza un contenedor de Docker para ejecutar una base de datos MySQL. A continuación, se detallan los pasos para configurar y ejecutar el proyecto.
 
-First, run the development server:
+## Requisitos Previos
+
+Asegúrate de tener instalados los siguientes requisitos previos en tu sistema:
+
+- [Docker](https://docs.docker.com/get-docker/)
+- [Node.js](https://nodejs.org/) (con Yarn o NPM)
+
+## Paso 1: Clonar el Repositorio
+
+Clona este repositorio a tu máquina local utilizando Git:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/tu-usuario/tu-proyecto.git
+cd tu-proyecto
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Paso 2: Instalar las Dependencias
+Para instalar las dependencias del proyecto, utiliza Yarn o NPM:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```bash
+# Usando Yarn
+yarn install
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+# O usando NPM
+npm install
+```
+## Paso 3: Iniciar la Aplicación en el Puerto 3000
+Puedes iniciar la aplicación en el puerto 3000 con el siguiente comando:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+# Usando Yarn
+yarn dev
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+# O usando NPM
+npm run dev
+```
 
-## Learn More
+La aplicación estará disponible en http://localhost:3000. Abre tu navegador y accede a esa URL.
 
-To learn more about Next.js, take a look at the following resources:
+## Paso 4: Crear el Archivo .env
+Copia el archivo .env.example y crea un nuevo archivo .env para tener la contrasena de la base de datos
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Paso 5: Configuración del Contenedor de Docker
+El contenedor de Docker se utilizará para ejecutar la base de datos MySQL necesaria para el proyecto. Asegúrate de tener Docker instalado en tu sistema.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Ejecuta el siguiente comando para iniciar el contenedor de Docker:
 
-## Deploy on Vercel
+```bash
+docker-compose up -d
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Esto ejecutará el script SQL y configurará la base de datos MySQL en el contenedor.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+¡Eso es todo! Ahora puedes acceder a tu aplicación en http://localhost:3000 con la base de datos en el contenedor de Docker.
+
+

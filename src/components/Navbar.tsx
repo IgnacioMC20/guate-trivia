@@ -3,7 +3,6 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
 export const Navbar = () => {
-    const router = useRouter()
 
     return (
         <AppBar sx={{ backgroundColor: '#A0C4FF'}}>

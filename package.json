@@ -14,11 +14,13 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.13",
     "@mui/material": "^5.14.13",
+    "mysql2": "^3.6.2",
     "next": "13.5.4",
     "next-auth": "^4.23.2",
     "react": "^18",
     "react-dom": "^18",
-    "react-hook-form": "^7.47.0"
+    "react-hook-form": "^7.47.0",
+    "sequelize": "^6.33.0"
   },
   "devDependencies": {
     "@types/node": "^20",

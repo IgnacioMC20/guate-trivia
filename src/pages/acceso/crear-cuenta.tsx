@@ -55,7 +55,12 @@ const RegisterPage: NextPage = () => {
         <AuthLayout title={'Registro'}>
             <Grid container sx={{ height: '100%' }}>
                 <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
-                    <Card sx={{ width: '50%', padding: '25px 25px', backgroundColor: '#FDFFB6' }}>
+                    <Card sx={{
+                        width: {
+                            sm: '80%',
+                            md: '50%'
+                        }, padding: '25px 25px', backgroundColor: '#FDFFB6'
+                    }}>
                         <form onSubmit={handleSubmit(onRegisterUser)} noValidate>
                             <Grid container spacing={4}>
                                 <Grid item xs={12} display='flex' justifyContent='center'>
@@ -133,7 +138,7 @@ const RegisterPage: NextPage = () => {
                                                         className={`image-container ${selectedImage === image.id ? 'selected' : ''}`}
                                                         onClick={() => handleImageClick(image.id)}
                                                     >
-                                                        <Image src={image.src} width={100} height={100} alt={`Image ${image.id}`} />
+                                                        <Image src={image.src} width={50} height={50} alt={`Image ${image.id}`} />
                                                     </div>
                                                 </Grid>
                                             ))}
