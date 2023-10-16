@@ -54,19 +54,20 @@ export const lightTheme = createTheme({
         variant: 'contained',
         size: 'small',
         disableElevation: true,
-        // color: 'info'
+        color: 'info'
       },
       styleOverrides: {
         root: {
           // backgroundColor: 'white',
           // color: 'black',
+          border: '1px solid #c4c4c4',
           textTransform: 'none',
           boxShadow: 'none',
           borderRadius: 10,
           ':hover': {
-            backgroundColor: 'rgba(0,0,0,0.05)',
+            backgroundColor: 'white',
+            border: '1px solid black',
             transition: 'all 0.3s ease-in-out',
-            color: 'black'
           }
         }
       }
