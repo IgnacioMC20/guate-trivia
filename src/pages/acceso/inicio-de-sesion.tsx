@@ -1,14 +1,14 @@
-import { Button, Card, Grid, Link, TextField, Typography } from '@mui/material'
+import { LockClockOutlined } from '@mui/icons-material'
+import { Avatar, Button, Card, Checkbox, FormControlLabel, Grid, Link, TextField, Typography } from '@mui/material'
 import { NextPage } from 'next'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import { signIn } from 'next-auth/react'
 import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { AuthLayout } from '@/layout'
 // import { AuthContext } from '@/context'
-// import { validations } from '@/utils'
+import { validations } from '@/utils'
 
 type FormData = {
     email: string,
@@ -17,30 +17,44 @@ type FormData = {
 
 const LoginPage: NextPage = () => {
 
-    // const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>()
-    // const { loginUser } = useContext(AuthContext)
+    const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>()
     const router = useRouter()
 
-    // const onLoginUser = async ({ email, password }: FormData) => {
-    //     // const isValidLogin = await loginUser(email, password)
+    const onLoginUser = async ({ email, password }: FormData) => {
+        console.log({ email, password })
+        //todo: validar email y password
+    }
 
-    //     // const destination = router.query.p?.toString() || '/'
-    //     // if (isValidLogin) router.replace(destination)
-    //     signIn('credentials', { email, password })
-    // }
+    //todo: agregar validaciones tambien en el registro
+    const isValidPassword = (password: string) => {
+        // Validar que la contraseña tenga al menos 8 caracteres, una mayúscula, una minúscula y un número
+        const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/
+        return passwordPattern.test(password)
+    }
 
     return (
         <AuthLayout title={'Login'}>
             <Grid container sx={{ height: '100%' }} display='flex' justifyContent='center' alignItems='center'>
                 <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
-                    <Card sx={{ width: '50%', padding: '25px 25px', backgroundColor: '#FDFFB6' }}>
-                        <form /* onSubmit={handleSubmit(onLoginUser)} */ noValidate>
+                    <Card sx={{
+                        width: {
+                            sm: '80%',
+                            md: '50%'
+                        }, padding: '50px 50px', backgroundColor: '#FDFFB6'
+                    }}>
+                        <form onSubmit={handleSubmit(onLoginUser)} noValidate>
                             <Grid container spacing={4}>
                                 <Grid item xs={12} display='flex' justifyContent='center'>
                                     <Typography color='primary' variant='h1' component='h1'>Iniciar Sesión</Typography>
                                 </Grid>
+                                <Grid item xs={12} display='flex' justifyContent='center'>
+                                    <Avatar sx={{ m: 1, bgcolor: 'main' }}>
+                                        <LockClockOutlined />
+                                    </Avatar>
+                                </Grid>
                                 <Grid item xs={12}>
-                                    {/* <TextField
+                                    <TextField
+                                        sx={{ backgroundColor: 'white' }}
                                         label='Correo'
                                         type='email'
                                         variant='outlined'
@@ -51,10 +65,11 @@ const LoginPage: NextPage = () => {
                                         })}
                                         error={!!errors.email}
                                         helperText={errors.email?.message}
-                                        autoComplete='false' /> */}
+                                        autoComplete='false' />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    {/* <TextField
+                                    <TextField
+                                        sx={{ backgroundColor: 'white' }}
                                         label='Contraseña'
                                         type='password'
                                         variant='outlined'
@@ -65,12 +80,30 @@ const LoginPage: NextPage = () => {
                                         })}
                                         error={!!errors.password}
                                         helperText={errors.password?.message}
-                                        autoComplete='false' /> */}
+                                        autoComplete='false' />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <FormControlLabel
+                                        control={<Checkbox value="remember" color='primary' sx={{
+                                            '&.Mui-checked': {
+                                                '& .MuiSvgIcon-root': {
+                                                    backgroundColor: 'white',
+                                                },
+                                            },
+                                        }} />}
+                                        label="Recuérdame"
+                                    />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Button type='submit' size='large' fullWidth>Ingresar</Button>
                                 </Grid>
-                                <Grid item xs={12} display='flex' justifyContent='end'>
+                                <Grid item xs={12} display='flex' justifyContent='space-around'>
+                                    <NextLink href={'/acceso/recuperar-credenciales'} passHref legacyBehavior>
+                                        <Link underline='hover'>
+                                            Olvidaste tu Contraseña
+                                        </Link>
+                                    </NextLink>
+
                                     <NextLink href={router.query.p ? `/acceso/crear-cuenta?p=${router.query.p.toString()}` : '/acceso/crear-cuenta'} passHref legacyBehavior>
                                         <Link underline='hover'>
                                             No tienes cuenta?

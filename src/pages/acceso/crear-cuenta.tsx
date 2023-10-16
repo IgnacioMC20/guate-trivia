@@ -7,7 +7,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { AuthLayout } from '@/layout'
-import * as validations from '@/utils'
+import { validations } from '@/utils'
 
 type FormData = {
     email: string
