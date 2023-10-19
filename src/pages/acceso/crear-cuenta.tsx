@@ -1,10 +1,12 @@
 import { Button, Card, Grid, Link, TextField, Typography } from '@mui/material'
+// import bcrypt from 'bcrypt'
 import { NextPage } from 'next'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast, ToastContainer } from 'react-toastify'
 
 import { AuthLayout } from '@/layout'
 import { validations } from '@/utils'
@@ -27,6 +29,19 @@ const RegisterPage: NextPage = () => {
     const router = useRouter()
 
     const onRegisterUser = async ({ email, password, name }: FormData) => {
+        // const hashPass = bcrypt.hashSync(password, 10)
+        if (!selectedImage) {
+            return toast.error('🦄 Debes seleccionar una image!', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+            })
+        }
         console.log({ email, password, name, selectedImage })
     }
 
@@ -34,6 +49,12 @@ const RegisterPage: NextPage = () => {
         return (value: string) => {
             return value === password || 'Las contraseñas no coinciden'
         }
+    }
+
+    const isValidPassword = (password: string) => {
+        // Validar que la contraseña tenga al menos 8 caracteres, una mayúscula, una minúscula y un número
+        const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/
+        return passwordPattern.test(password)
     }
 
     const [selectedImage, setSelectedImage] = useState<number | null>(null)
@@ -53,6 +74,7 @@ const RegisterPage: NextPage = () => {
 
     return (
         <AuthLayout title={'Registro'}>
+            <ToastContainer />
             <Grid container sx={{ height: '100%' }}>
                 <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                     <Card sx={{
@@ -103,7 +125,8 @@ const RegisterPage: NextPage = () => {
                                         fullWidth
                                         {...register('password', {
                                             required: 'Este campo es requerido',
-                                            minLength: { value: 6, message: 'Minimo de 6 caracteres' }
+                                            minLength: { value: 8, message: 'Minimo de 8 caracteres' },
+                                            validate: (value) => isValidPassword(value) || 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número'
                                         })}
                                         error={!!errors.password}
                                         helperText={errors.password?.message}

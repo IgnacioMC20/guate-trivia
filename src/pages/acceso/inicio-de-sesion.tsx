@@ -25,7 +25,6 @@ const LoginPage: NextPage = () => {
         //todo: validar email y password
     }
 
-    //todo: agregar validaciones tambien en el registro
     const isValidPassword = (password: string) => {
         // Validar que la contraseña tenga al menos 8 caracteres, una mayúscula, una minúscula y un número
         const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/
@@ -76,7 +75,8 @@ const LoginPage: NextPage = () => {
                                         fullWidth
                                         {...register('password', {
                                             required: 'Este campo es requerido',
-                                            minLength: { value: 6, message: 'Minimo de 6 caracteres' }
+                                            minLength: { value: 8, message: 'Minimo de 8 caracteres' },
+                                            validate: (value) => isValidPassword(value) || 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número'
                                         })}
                                         error={!!errors.password}
                                         helperText={errors.password?.message}
