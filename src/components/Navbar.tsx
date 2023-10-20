@@ -1,17 +1,18 @@
-import { AppBar, Box, Link, Toolbar, Typography } from '@mui/material'
+import { AppBar, Box, Link, Toolbar, Typography, Button } from '@mui/material'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 
 export const Navbar = () => {
 
     return (
-        <AppBar sx={{ backgroundColor: '#A0C4FF'}}>
+        <AppBar sx={{ backgroundColor: '#A0C4FF' }}>
             <Toolbar>
-                <NextLink href={'/'} passHref legacyBehavior>
-                    <Link display={'flex'} alignItems={'center'}>
-                        <Typography variant='h6'>Guate Trivia</Typography>
-                    </Link>
-                </NextLink>
+                <Button variant='outlined' component={NextLink} href='/main/dashboard'>
+                    Inicio
+                </Button>
+                <Button variant='outlined' component={NextLink} href='/amigos'>
+                    Amigos
+                </Button>
 
                 <Box flex={1} />
 
