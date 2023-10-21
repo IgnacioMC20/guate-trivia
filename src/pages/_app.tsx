@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={lightTheme}>
       <UIProvider>
-
+        <ToastContainer />
         <CssBaseline />
         <Component {...pageProps} />
       </UIProvider>

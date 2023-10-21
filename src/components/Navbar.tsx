@@ -33,8 +33,7 @@ const ButtonLink = ({ href, children, pathname }: ButtonLinkProps) => {
 }
 
 export const Navbar = () => {
-    const { toggleSideMenu, isMenuOpen } = useContext(UIContext)
-    console.log({ isMenuOpen })
+    const { toggleSideMenu } = useContext(UIContext)
     const router = useRouter()
     // console.log(router)
 

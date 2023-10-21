@@ -3,7 +3,6 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import { Card, Grid, Typography } from '@mui/material'
 import { Divider } from '@mui/material'
 import { InputLabel } from '@mui/material'
-import React from 'react'
 
 export const Userbar = () => {
     return (

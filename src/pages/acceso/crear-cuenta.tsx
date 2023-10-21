@@ -1,15 +1,15 @@
 import { Button, Card, Grid, Link, TextField, Typography } from '@mui/material'
-// import bcrypt from 'bcrypt'
+import { AxiosResponse } from 'axios'
 import { NextPage } from 'next'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 
 import { AuthLayout } from '@/layout'
-import { validations } from '@/utils'
+import { gtApi, images, validations, } from '@/utils'
 
 type FormData = {
     email: string
@@ -18,31 +18,54 @@ type FormData = {
     confirmPassword: string
 }
 
-interface Image {
-    id: number
-    src: string
-}
-
 const RegisterPage: NextPage = () => {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>()
     const router = useRouter()
+    const [selectedImage, setSelectedImage] = useState<number | null>(null)
 
     const onRegisterUser = async ({ email, password, name }: FormData) => {
-        // const hashPass = bcrypt.hashSync(password, 10)
         if (!selectedImage) {
-            return toast.error('🦄 Debes seleccionar una image!', {
+            return toast.error('🌴 Debes seleccionar un avatar!', {
                 position: 'top-right',
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
+                closeOnClick: false,
+                pauseOnHover: false,
                 draggable: true,
                 progress: undefined,
                 theme: 'light',
             })
         }
-        console.log({ email, password, name, selectedImage })
+
+        try {
+            const { data }: AxiosResponse = await gtApi.post('/auth/signup', {
+              email,
+              password,
+              name,
+              avatar: selectedImage,
+            })
+            console.log(data)
+            
+            router.replace('/')
+        } catch (error: any) {
+            if (error.response) {
+                // El servidor respondió con un estado de error (por ejemplo, un error 4xx o 5xx)
+                console.error('Error en la respuesta del servidor:', error.response.data)
+                // Puedes mostrar un mensaje de error al usuario si es relevante
+            } else if (error.request) {
+                // La solicitud se hizo pero no se recibió respuesta (por ejemplo, problemas de red)
+                console.error('No se pudo obtener una respuesta del servidor.')
+                // Puedes mostrar un mensaje de error de red al usuario si es relevante
+            } else {
+                // Ocurrió un error en la configuración de la solicitud (por ejemplo, error en Axios)
+                console.error('Error en la configuración de la solicitud:', error.message)
+                // Puedes mostrar un mensaje de error genérico al usuario
+            }
+        }
+
+        //todo: push to dashboard
+        // console.log({ email, password, name, avatar: selectedImage })
     }
 
     const samePasswordAs = (password: string) => {
@@ -50,21 +73,6 @@ const RegisterPage: NextPage = () => {
             return value === password || 'Las contraseñas no coinciden'
         }
     }
-
-    const isValidPassword = (password: string) => {
-        // Validar que la contraseña tenga al menos 8 caracteres, una mayúscula, una minúscula y un número
-        const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/
-        return passwordPattern.test(password)
-    }
-
-    const [selectedImage, setSelectedImage] = useState<number | null>(null)
-
-    const images: Image[] = [
-        { id: 1, src: '/test-avatar.png' },
-        { id: 2, src: '/test-avatar.png' },
-        { id: 3, src: '/test-avatar.png' },
-        { id: 4, src: '/test-avatar.png' },
-    ]
 
     const handleImageClick = (id: number) => {
         setSelectedImage(id)
@@ -74,7 +82,6 @@ const RegisterPage: NextPage = () => {
 
     return (
         <AuthLayout title={'Registro'}>
-            <ToastContainer />
             <Grid container sx={{ height: '100%' }}>
                 <Grid item xs={12} display='flex' justifyContent='center' alignItems='center'>
                     <Card sx={{
@@ -126,7 +133,7 @@ const RegisterPage: NextPage = () => {
                                         {...register('password', {
                                             required: 'Este campo es requerido',
                                             minLength: { value: 8, message: 'Minimo de 8 caracteres' },
-                                            validate: (value) => isValidPassword(value) || 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número'
+                                            validate: (value) => validations.isValidPassword(value) || 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número'
                                         })}
                                         error={!!errors.password}
                                         helperText={errors.password?.message}

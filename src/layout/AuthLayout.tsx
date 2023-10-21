@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import { FC } from 'react'
 
+import { AuthRoute } from '@/components'
+
 interface Props {
     title: string
     children: React.ReactNode
@@ -26,7 +28,9 @@ export const AuthLayout: FC<Props> = ({ title, children }) => {
                 justifyContent: 'center', /* Centra los hijos horizontalmente */
                 alignItems: 'center', /* Centra los hijos verticalmente */
             }}>
-                {children}
+                <AuthRoute>
+                    {children}
+                </AuthRoute>
             </main>
         </>
     )

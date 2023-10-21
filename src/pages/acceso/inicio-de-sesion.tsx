@@ -29,12 +29,6 @@ const LoginPage: NextPage = () => {
         //todo: validar email y password
     }
 
-    const isValidPassword = (password: string) => {
-        // Validar que la contraseña tenga al menos 8 caracteres, una mayúscula, una minúscula y un número
-        const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/
-        return passwordPattern.test(password)
-    }
-
     return (
         <AuthLayout title={'Login'}>
             <Grid container sx={{ height: '100%' }} display='flex' justifyContent='center' alignItems='center'>
@@ -85,7 +79,7 @@ const LoginPage: NextPage = () => {
                                         {...register('password', {
                                             required: 'Este campo es requerido',
                                             minLength: { value: 8, message: 'Minimo de 8 caracteres' },
-                                            validate: (value) => isValidPassword(value) || 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número'
+                                            validate: (value) => validations.isValidPassword(value) || 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número'
                                         })}
                                         error={!!errors.password}
                                         helperText={errors.password?.message}
