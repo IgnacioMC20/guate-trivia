@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.13",
     "@mui/material": "^5.14.13",
+    "js-cookie": "^3.0.5",
     "mysql2": "^3.6.2",
     "next": "13.5.4",
     "next-auth": "^4.23.2",
