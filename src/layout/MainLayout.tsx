@@ -2,15 +2,15 @@ import Head from 'next/head'
 import React, { FC } from 'react'
 
 import { Navbar } from '@/components'
+import { SideMenu } from '@/components/SideMenu'
 
 interface Props {
     children: React.ReactNode
     title: string
     pageDescription: string
-    imageFullUrl?: string
 }
 
-export const MainLayout: FC<Props> = ({ children, title, pageDescription, imageFullUrl }) => {
+export const MainLayout: FC<Props> = ({ children, title, pageDescription }) => {
     return (
         <>
             <Head>
@@ -23,10 +23,10 @@ export const MainLayout: FC<Props> = ({ children, title, pageDescription, imageF
                 <Navbar />
             </nav>
 
+            <SideMenu />
             <main style={{
-                margin: '80px auto',
-                maxWidth: '1440px',
-                padding: '0px 30px'
+                padding: '10px',
+                height: 'auto',
             }}>
                 {children}
             </main>

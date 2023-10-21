@@ -7,11 +7,11 @@ export const lightTheme = createTheme({
       main: '#1E1E1E'
     },
     secondary: {
-      main: '#7600bc'
+      main: '#A0C4FF'
     },
     info: {
       main: '#fff'
-    }
+    },
   },
   components: {
     MuiLink: {
@@ -68,6 +68,9 @@ export const lightTheme = createTheme({
             backgroundColor: 'white',
             border: '1px solid black',
             transition: 'all 0.3s ease-in-out',
+          },
+          ':disabled': {
+            backgroundColor: '#fff',
           }
         }
       }

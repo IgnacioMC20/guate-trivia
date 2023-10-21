@@ -1,40 +1,40 @@
-import { Button, Card, CardActionArea, Grid, Typography } from '@mui/material'
+import Grid from '@mui/material/Grid'
+import Image from 'next/image'
+import Link from 'next/link'
 
-import { Navbar } from '@/components'
+import { Userbar } from '@/components/Userbar'
 import { MainLayout } from '@/layout'
+import { dashboardImages } from '@/utils'
 
 export default function Home() {
-  {/* Dashboard */ }
-  return (
-    <MainLayout title='Dashboard' pageDescription='Dashboard'>
-      <Navbar />
-      <Grid container display={'flex'} justifyContent={'center'} alignItems={'center'} flexDirection={'column'}>
-        <Grid item>
-          <Card>
-            <CardActionArea>
-              <Typography variant='h1'>Dashboard</Typography>
-            </CardActionArea>
-          </Card>
-        </Grid>
-        <Grid item>
-          <Card>
-            <Grid container display={'flex'} justifyContent={'center'}
-              sx={{ height: '100%', border: '1px solid red' }}
-            >
-              <Grid item sx={{ border: '1px solid black' }}>
-                <CardActionArea>
-                  <Typography variant='h1'>Dashboard</Typography>
-                </CardActionArea>
-              </Grid>
-              <Grid item sx={{ border: '1px solid black' }}>
-                <Button size="large">Large</Button>
-                <Typography variant='h1'>Dashboard</Typography>
-              </Grid>
+    return (
+        <MainLayout title='Dashboard' pageDescription='Dashboard'>
+            <Grid container sx={{ height: { xs: 'auto', sm: 'calc(100vh - 130px)' } }}>
+                <Grid container height={{ xs: 'auto', sm: '20%' }} >
+                    <Userbar />
+                </Grid>
+                <Grid container sx={{ margin: { xs: '5px', sm: '0px' }, height: { xs: 'auto', sm: '80%' } }} >
+                    {
+                        dashboardImages.map(({ src, alt, href, color }, index) => (
+                            <Grid key={index} item xs={12} sm={6} height={'100%'} sx={{ background: color, borderRadius: '10px' }} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                                <Link href={href || '/'} passHref>
+                                    <Image
+                                        src={src}
+                                        alt={alt}
+                                        width={220}
+                                        height={200}
+                                        style={{
+                                            maxWidth: '100%',
+                                            height: 'auto'
+                                        }}
+                                    />
+                                </Link>
+                            </Grid>
+                        )
+                        )
+                    }
+                </Grid>
             </Grid>
-          </Card>
-        </Grid>
-      </Grid>
-
-    </MainLayout>
-  )
+        </MainLayout>
+    )
 }
