@@ -13,7 +13,7 @@ export default function Home() {
                 <Grid container height={{ xs: 'auto', sm: '20%' }} >
                     <Userbar />
                 </Grid>
-                <Grid container sx={{ margin: { xs: '5px', sm: '0px' }, height: {xs: 'auto', sm: '80%'} }} >
+                <Grid container sx={{ margin: { xs: '5px', sm: '0px' }, height: { xs: 'auto', sm: '80%' } }} >
                     {
                         dashboardImages.map(({ src, alt, href, color }, index) => (
                             <Grid key={index} item xs={12} sm={6} height={'100%'} sx={{ background: color, borderRadius: '10px' }} display={'flex'} justifyContent={'center'} alignItems={'center'}>
@@ -21,9 +21,12 @@ export default function Home() {
                                     <Image
                                         src={src}
                                         alt={alt}
-                                        width={100}
-                                        height={100}
-                                    layout="responsive"
+                                        width={220}
+                                        height={200}
+                                        style={{
+                                            maxWidth: '100%',
+                                            height: 'auto'
+                                        }}
                                     />
                                 </Link>
                             </Grid>
