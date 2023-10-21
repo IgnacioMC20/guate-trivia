@@ -6,9 +6,13 @@ import { useRouter } from 'next/router'
 import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { AuthLayout } from '@/layout'
 // import { AuthContext } from '@/context'
+import { AuthLayout } from '@/layout'
 import { validations } from '@/utils'
+
+import Image from 'next/image'
+
+import logoImage from '/public/logo.png'
 
 type FormData = {
     email: string,
@@ -48,9 +52,14 @@ const LoginPage: NextPage = () => {
                                     <Typography color='primary' variant='h1' component='h1'>Iniciar Sesión</Typography>
                                 </Grid>
                                 <Grid item xs={12} display='flex' justifyContent='center'>
-                                    <Avatar sx={{ m: 1, bgcolor: 'main' }}>
-                                        <LockClockOutlined />
-                                    </Avatar>
+                                    {/* <Avatar sx={{ m: 1, bgcolor: 'main' }}> */}
+                                        <Image
+                                            src={logoImage}
+                                            alt="Logo Guate-Trivia"
+                                            width={150}
+                                            height={150}
+                                        />
+                                    {/* </Avatar> */}
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
