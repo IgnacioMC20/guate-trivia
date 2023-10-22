@@ -6,8 +6,6 @@ import {
     Link,
     Button,
 } from '@mui/material'
-import Checkbox from '@mui/material/Checkbox'
-import FormControlLabel from '@mui/material/FormControlLabel'
 import { NextPage } from 'next'
 import NextLink from 'next/link'
 import { useForm } from 'react-hook-form'

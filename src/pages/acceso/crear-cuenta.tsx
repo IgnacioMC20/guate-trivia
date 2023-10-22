@@ -3,11 +3,12 @@ import { NextPage } from 'next'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { AuthContext } from '@/context'
 import { AuthLayout } from '@/layout'
-import { validations } from '@/utils'
+import { images, showToast, validations, } from '@/utils'
 
 type FormData = {
     email: string
@@ -16,18 +17,32 @@ type FormData = {
     confirmPassword: string
 }
 
-interface Image {
-    id: number
-    src: string
-}
-
 const RegisterPage: NextPage = () => {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>()
+    const { registerUser } = useContext(AuthContext)
     const router = useRouter()
+    const [selectedImage, setSelectedImage] = useState<number | null>(null)
 
     const onRegisterUser = async ({ email, password, name }: FormData) => {
-        console.log({ email, password, name, selectedImage })
+        if (!selectedImage) {
+            showToast('Debes seleccionar una imagen')
+            return
+        }
+
+        const { hasError, message } = await registerUser({
+            email,
+            password,
+            name,
+            avatar: selectedImage!,
+        })
+
+        if (hasError) {
+            showToast(message!)
+            return
+        }
+
+        router.replace('/')
     }
 
     const samePasswordAs = (password: string) => {
@@ -35,15 +50,6 @@ const RegisterPage: NextPage = () => {
             return value === password || 'Las contraseñas no coinciden'
         }
     }
-
-    const [selectedImage, setSelectedImage] = useState<number | null>(null)
-
-    const images: Image[] = [
-        { id: 1, src: '/test-avatar.png' },
-        { id: 2, src: '/test-avatar.png' },
-        { id: 3, src: '/test-avatar.png' },
-        { id: 4, src: '/test-avatar.png' },
-    ]
 
     const handleImageClick = (id: number) => {
         setSelectedImage(id)
@@ -103,7 +109,8 @@ const RegisterPage: NextPage = () => {
                                         fullWidth
                                         {...register('password', {
                                             required: 'Este campo es requerido',
-                                            minLength: { value: 6, message: 'Minimo de 6 caracteres' }
+                                            minLength: { value: 8, message: 'Minimo de 8 caracteres' },
+                                            validate: (value) => validations.isValidPassword(value) || 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número'
                                         })}
                                         error={!!errors.password}
                                         helperText={errors.password?.message}
@@ -119,7 +126,7 @@ const RegisterPage: NextPage = () => {
                                         fullWidth
                                         {...register('confirmPassword', {
                                             required: 'Este campo es requerido',
-                                            minLength: { value: 6, message: 'Minimo de 6 caracteres' },
+                                            minLength: { value: 8, message: 'Minimo de 8 caracteres' },
                                             validate: samePasswordAs(password),
                                         })}
                                         error={!!errors.confirmPassword}
@@ -130,7 +137,7 @@ const RegisterPage: NextPage = () => {
 
                                 <Grid item xs={12} display={'flex'} justifyContent={'center'}>
                                     <Card sx={{ width: '100%', padding: '10px 10px', backgroundColor: '#fff', border: '1px solid #c4c4c4' }}>
-                                        <Grid container spacing={4} display={'flex'} justifyContent={'space-around'}>
+                                        <Grid container spacing={2} display={'flex'} justifyContent={'space-around'}>
                                             {images.map((image) => (
                                                 <Grid item display={'flex'} justifyContent={'center'} key={image.id}>
                                                     <div
@@ -138,7 +145,7 @@ const RegisterPage: NextPage = () => {
                                                         className={`image-container ${selectedImage === image.id ? 'selected' : ''}`}
                                                         onClick={() => handleImageClick(image.id)}
                                                     >
-                                                        <Image src={image.src} width={50} height={50} alt={`Image ${image.id}`} />
+                                                        <Image src={image.src} width={100} height={100} alt={`Image ${image.id}`} />
                                                     </div>
                                                 </Grid>
                                             ))}

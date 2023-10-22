@@ -1,8 +1,7 @@
 import Head from 'next/head'
 import React, { FC } from 'react'
 
-import { Navbar } from '@/components'
-import { SideMenu } from '@/components/SideMenu'
+import { Navbar, PrivateRoute, SideMenu } from '@/components'
 
 interface Props {
     children: React.ReactNode
@@ -28,7 +27,9 @@ export const MainLayout: FC<Props> = ({ children, title, pageDescription }) => {
                 padding: '10px',
                 height: 'auto',
             }}>
-                {children}
+                <PrivateRoute>
+                    {children}
+                </PrivateRoute>
             </main>
 
             <footer>

@@ -14,11 +14,7 @@ export const UIProvider: FC<{children: React.ReactNode}> = ({children}) => {
   
     const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE)
 
-    // const toggleSideMenu = () => dispatch({type: '[UI] - ToggleMenu'})
-    const toggleSideMenu = () => {
-        dispatch({type: '[UI] - ToggleMenu'})
-        console.log('toggleSideMenu')
-    }
+    const toggleSideMenu = () => dispatch({type: '[UI] - ToggleMenu'})
 
     return (
         <UIContext.Provider value={{
