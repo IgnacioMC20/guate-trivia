@@ -11,8 +11,8 @@ export const dashboardImages = [
 ]
 
 export const images = [
-    { id: 1, src: '/test-avatar.png' },
-    { id: 2, src: '/test-avatar.png' },
-    { id: 3, src: '/test-avatar.png' },
-    { id: 4, src: '/test-avatar.png' },
+    { id: 1, src: '/jaguar.jpeg' },
+    { id: 2, src: '/perro.jpeg' },
+    { id: 3, src: '/palomas.jpeg' },
+    { id: 4, src: '/tucanes.jpeg' },
 ]

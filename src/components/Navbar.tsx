@@ -5,8 +5,8 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 
-import { links } from '@/utils'
-import { UIContext } from '@/context'
+import { images, links } from '@/utils'
+import { AuthContext, UIContext } from '@/context'
 
 import logoImage from '/public/logo.png'
 
@@ -34,8 +34,9 @@ const ButtonLink = ({ href, children, pathname }: ButtonLinkProps) => {
 
 export const Navbar = () => {
     const { toggleSideMenu } = useContext(UIContext)
+    const { user } = useContext(AuthContext)
+    const userImage = images.find(image => image.id === parseInt(user?.avatar!))?.src || images[0].src
     const router = useRouter()
-    // console.log(router)
 
     return (
         <AppBar sx={{ backgroundColor: '#A0C4FF', height: '110px' }} position="static">
@@ -67,24 +68,20 @@ export const Navbar = () => {
 
                 <Box flex={1} />
 
-                {/* Menu para pantallas chiquitas */}
-                <IconButton sx={{ display: { xs: '', sm: 'none' } }} onClick={toggleSideMenu}>
-                    <Menu />
-                </IconButton>
-
                 {/* Avatar */}
                 <Avatar
                     sx={{
-                        width: { xs: 50, sm: 75 },
-                        height: { xs: 50, sm: 75 },
-                        backgroundColor: '#fdc500', // Color de fondo similar a Google
-                        fontSize: '1.5rem', // Tamaño de la letra
-                        fontWeight: 'bold', // Estilo de la letra
-                        marginRight: '1rem', // Margen izquierdo
+                        width: { xs: 75, sm: 75 },
+                        height: { xs: 75, sm: 75 },
+                        display: { xs: 'none', sm: 'flex' }, // Ocultar en pantallas pequeñas
                     }}
                 >
-                    G
+                    <Image src={userImage} width={100} height={100} alt={`Image ${user?.avatar!}`} style={{ borderRadius: '50%' }} />
                 </Avatar>
+                <IconButton onClick={toggleSideMenu}>
+                    <Menu sx={{ fontSize: 45 }} />
+                </IconButton>
+
             </Toolbar>
         </AppBar>
     )

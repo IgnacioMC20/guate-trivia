@@ -1,15 +1,14 @@
 import { Button, Card, Grid, Link, TextField, Typography } from '@mui/material'
-import { AxiosResponse } from 'axios'
 import { NextPage } from 'next'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
 
+import { AuthContext } from '@/context'
 import { AuthLayout } from '@/layout'
-import { gtApi, images, validations, } from '@/utils'
+import { images, showToast, validations, } from '@/utils'
 
 type FormData = {
     email: string
@@ -21,51 +20,29 @@ type FormData = {
 const RegisterPage: NextPage = () => {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm<FormData>()
+    const { registerUser } = useContext(AuthContext)
     const router = useRouter()
     const [selectedImage, setSelectedImage] = useState<number | null>(null)
 
     const onRegisterUser = async ({ email, password, name }: FormData) => {
         if (!selectedImage) {
-            return toast.error('🌴 Debes seleccionar un avatar!', {
-                position: 'top-right',
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: 'light',
-            })
+            showToast('Debes seleccionar una imagen')
+            return
         }
 
-        try {
-            const { data }: AxiosResponse = await gtApi.post('/auth/signup', {
-              email,
-              password,
-              name,
-              avatar: selectedImage,
-            })
-            console.log(data)
-            
-            router.replace('/')
-        } catch (error: any) {
-            if (error.response) {
-                // El servidor respondió con un estado de error (por ejemplo, un error 4xx o 5xx)
-                console.error('Error en la respuesta del servidor:', error.response.data)
-                // Puedes mostrar un mensaje de error al usuario si es relevante
-            } else if (error.request) {
-                // La solicitud se hizo pero no se recibió respuesta (por ejemplo, problemas de red)
-                console.error('No se pudo obtener una respuesta del servidor.')
-                // Puedes mostrar un mensaje de error de red al usuario si es relevante
-            } else {
-                // Ocurrió un error en la configuración de la solicitud (por ejemplo, error en Axios)
-                console.error('Error en la configuración de la solicitud:', error.message)
-                // Puedes mostrar un mensaje de error genérico al usuario
-            }
+        const { hasError, message } = await registerUser({
+            email,
+            password,
+            name,
+            avatar: selectedImage!,
+        })
+
+        if (hasError) {
+            showToast(message!)
+            return
         }
 
-        //todo: push to dashboard
-        // console.log({ email, password, name, avatar: selectedImage })
+        router.replace('/')
     }
 
     const samePasswordAs = (password: string) => {
@@ -149,7 +126,7 @@ const RegisterPage: NextPage = () => {
                                         fullWidth
                                         {...register('confirmPassword', {
                                             required: 'Este campo es requerido',
-                                            minLength: { value: 6, message: 'Minimo de 6 caracteres' },
+                                            minLength: { value: 8, message: 'Minimo de 8 caracteres' },
                                             validate: samePasswordAs(password),
                                         })}
                                         error={!!errors.confirmPassword}
@@ -160,7 +137,7 @@ const RegisterPage: NextPage = () => {
 
                                 <Grid item xs={12} display={'flex'} justifyContent={'center'}>
                                     <Card sx={{ width: '100%', padding: '10px 10px', backgroundColor: '#fff', border: '1px solid #c4c4c4' }}>
-                                        <Grid container spacing={4} display={'flex'} justifyContent={'space-around'}>
+                                        <Grid container spacing={2} display={'flex'} justifyContent={'space-around'}>
                                             {images.map((image) => (
                                                 <Grid item display={'flex'} justifyContent={'center'} key={image.id}>
                                                     <div
@@ -168,7 +145,7 @@ const RegisterPage: NextPage = () => {
                                                         className={`image-container ${selectedImage === image.id ? 'selected' : ''}`}
                                                         onClick={() => handleImageClick(image.id)}
                                                     >
-                                                        <Image src={image.src} width={50} height={50} alt={`Image ${image.id}`} />
+                                                        <Image src={image.src} width={100} height={100} alt={`Image ${image.id}`} />
                                                     </div>
                                                 </Grid>
                                             ))}

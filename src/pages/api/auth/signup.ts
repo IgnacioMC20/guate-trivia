@@ -22,7 +22,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse<Data>) 
 const registerUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   const { email = '', password = '', name = '', avatar = '' } = req.body as { email: string, password: string, name: string, avatar: string }
-
+  console.log({ email, password, name, avatar })
   if (!isValidPassword(password)) {
     return res.status(400).json({
       message: 'La contraseña no es valida'
@@ -40,13 +40,13 @@ const registerUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => 
 
   if (user) {
     return res.status(400).json({
-      message: 'No puede usar ese correo'
+      message: 'El correo ya esta registrado'
     })
   }
 
   const newUser = new User({
     email: email.toLocaleLowerCase(),
-    password: bcrypt.hashSync(password, 10),
+    password: bcrypt.hashSync(password),
     name,
     avatar
   })
