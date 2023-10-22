@@ -14,8 +14,8 @@ Asegúrate de tener instalados los siguientes requisitos previos en tu sistema:
 Clona este repositorio a tu máquina local utilizando Git:
 
 ```bash
-git clone https://github.com/tu-usuario/tu-proyecto.git
-cd tu-proyecto
+git clone https://github.com/IgnacioMC20/guate-trivia
+cd guate-trivia
 ```
 
 ## Paso 2: Instalar las Dependencias
