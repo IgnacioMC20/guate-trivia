@@ -24,11 +24,10 @@ const LoginPage: NextPage = () => {
     const router = useRouter()
 
     const onLoginUser = async ({ email, password }: FormData) => {
-        console.log({ email, password })
         const isValidLogin = await loginUser(email, password)
 
         if (!isValidLogin) {
-           showToast('Credenciales incorrectas')
+            showToast('Credenciales incorrectas')
             return
         }
 
@@ -53,6 +52,7 @@ const LoginPage: NextPage = () => {
                                 <Grid item xs={12} display='flex' justifyContent='center'>
                                     {/* <Avatar sx={{ m: 1, bgcolor: 'main' }}> */}
                                     <Image
+                                        priority
                                         src={logoImage}
                                         alt="Logo Guate-Trivia"
                                         width={150}

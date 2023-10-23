@@ -38,7 +38,7 @@ export const SideMenu = () => {
                             display: { xs: 'flex', sm: 'none' }, // Ocultar en pantallas grandes
                         }}
                     >
-                        <Image src={userImage} width={100} height={100} alt={`Image ${user?.avatar!}`} style={{ borderRadius: '50%' }} />
+                        <Image priority src={userImage} width={100} height={100} alt={`Image ${user?.avatar!}`} style={{ borderRadius: '50%' }} />
                     </Avatar>
                 </Box>
                 <List >

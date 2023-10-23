@@ -9,4 +9,19 @@
   .image-container.selected {
     border: 2px solid #A0C4FF; /* Puedes cambiar el color a tu preferencia */
   }
-  
+/* Define la animación */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.user-image {
+  /* Aplica la animación con una duración de 1 segundo y un retraso de 0.3 segundos */
+  animation: fadeIn 0.1s;
+  opacity: 0; /* Configura la opacidad inicial en 0 (invisible) */
+  animation-fill-mode: forwards; /* Mantén el estado final de la animación */
+}

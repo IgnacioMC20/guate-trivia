@@ -1,6 +1,3 @@
-export * from './Footer'
 export * from './Navbar'
 export * from './Userbar'
-export * from './PrivateRoute'
-export * from './AuthRoute'
 export * from './SideMenu'

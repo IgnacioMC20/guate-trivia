@@ -1,4 +1,5 @@
-import Grid from '@mui/material/Grid'
+import { Grid } from '@mui/material'
+// import Cookies from 'js-cookie'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -7,6 +8,8 @@ import { MainLayout } from '@/layout'
 import { dashboardImages } from '@/utils'
 
 export default function Home() {
+
+    //todo: add last question answered
     return (
         <MainLayout title='Dashboard' pageDescription='Dashboard'>
             <Grid container sx={{ height: { xs: 'auto', sm: 'calc(100vh - 130px)' } }}>
@@ -19,6 +22,7 @@ export default function Home() {
                             <Grid key={index} item xs={12} sm={6} height={'100%'} sx={{ background: color, borderRadius: '10px' }} display={'flex'} justifyContent={'center'} alignItems={'center'}>
                                 <Link href={href || '/'} passHref>
                                     <Image
+                                        priority
                                         src={src}
                                         alt={alt}
                                         width={220}

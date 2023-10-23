@@ -1,5 +1,5 @@
 import { Menu } from '@mui/icons-material'
-import { AppBar, Box, Toolbar, Button, Avatar, Typography, IconButton } from '@mui/material'
+import { AppBar, Box, Toolbar, Button, Typography, IconButton } from '@mui/material'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
@@ -35,7 +35,7 @@ const ButtonLink = ({ href, children, pathname }: ButtonLinkProps) => {
 export const Navbar = () => {
     const { toggleSideMenu } = useContext(UIContext)
     const { user } = useContext(AuthContext)
-    const userImage = images.find(image => image.id === parseInt(user?.avatar!))?.src || images[0].src
+    const userImage = images.find(image => image.id === parseInt(user?.avatar!))?.src
     const router = useRouter()
 
     return (
@@ -43,6 +43,7 @@ export const Navbar = () => {
             <Toolbar sx={{ height: '100%' }}>
                 {/* Logo  */}
                 <Image
+                    priority
                     src={logoImage}
                     alt="Logo Guate-Trivia"
                     width={100}
@@ -69,15 +70,19 @@ export const Navbar = () => {
                 <Box flex={1} />
 
                 {/* Avatar */}
-                <Avatar
-                    sx={{
-                        width: { xs: 75, sm: 75 },
-                        height: { xs: 75, sm: 75 },
-                        display: { xs: 'none', sm: 'flex' }, // Ocultar en pantallas pequeñas
-                    }}
-                >
-                    <Image src={userImage} width={100} height={100} alt={`Image ${user?.avatar!}`} style={{ borderRadius: '50%' }} />
-                </Avatar>
+                {
+                    userImage && (
+                        <Image
+                            priority
+                            src={userImage}
+                            width={75}
+                            height={75}
+                            alt={`Image ${user?.avatar!}`}
+                            className="user-image"
+                            style={{ borderRadius: '50%' }}
+                        />
+                    )
+                }
                 <IconButton onClick={toggleSideMenu}>
                     <Menu sx={{ fontSize: 45 }} />
                 </IconButton>
