@@ -145,7 +145,7 @@ const RegisterPage: NextPage = () => {
                                                         className={`image-container ${selectedImage === image.id ? 'selected' : ''}`}
                                                         onClick={() => handleImageClick(image.id)}
                                                     >
-                                                        <Image src={image.src} width={100} height={100} alt={`Image ${image.id}`} />
+                                                        <Image priority src={image.src} width={100} height={100} alt={`Image ${image.id}`} />
                                                     </div>
                                                 </Grid>
                                             ))}

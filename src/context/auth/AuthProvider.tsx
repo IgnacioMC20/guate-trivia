@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
-import { FC, useReducer, useEffect } from 'react'
+import { FC, useReducer, useEffect, useState } from 'react'
 
 import { AuthContext, RegisterUser, authReducer } from './'
 import { IUser } from '@/interfaces'
@@ -21,14 +21,22 @@ export const AuthProvider: FC<any> = ({ children }) => {
 
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE)
     const router = useRouter()
+    const [isLoggedIn, setIsLoggedIn] = useState(AUTH_INITIAL_STATE.isLoggedIn)
 
     useEffect(() => {
         checkToken()
-    }, [])
+    }, [isLoggedIn])
 
     const checkToken = async () => {
 
         if (!Cookies.get('token')) {
+            Cookies.remove('isLoggedIn')
+            setIsLoggedIn(false)
+            return
+        }
+        if(!Cookies.get('isLoggedIn')) {
+            Cookies.remove('token')
+            setIsLoggedIn(false)
             return
         }
 
@@ -36,6 +44,8 @@ export const AuthProvider: FC<any> = ({ children }) => {
             const { data } = await gtApi.get('/auth/validate-token')
             const { token, user } = data
             Cookies.set('token', token)
+            Cookies.set('isLoggedIn', 'true')
+            setIsLoggedIn(true)
             dispatch({ type: '[Auth] - Login', payload: user })
         } catch (error) {
             Cookies.remove('token')
@@ -48,19 +58,23 @@ export const AuthProvider: FC<any> = ({ children }) => {
             const { data } = await gtApi.post('/auth/login', { email, password })
             const { token, user } = data
             Cookies.set('token', token)
+            Cookies.set('isLoggedIn', 'true')
+            setIsLoggedIn(true)
             dispatch({ type: '[Auth] - Login', payload: user })
             return true
         } catch (error) {
             return false
         }
-
+        
     }
-
+    
     const registerUser = async ({ name, email, password, avatar }: RegisterUser): Promise<{ hasError: boolean; message?: string }> => {
         try {
             const { data } = await gtApi.post('/auth/signup', { name, email, password, avatar })
             const { token, user } = data
             Cookies.set('token', token)
+            Cookies.set('isLoggedIn', 'true')
+            setIsLoggedIn(true)
             dispatch({ type: '[Auth] - Login', payload: user })
             return {
                 hasError: false
@@ -83,7 +97,7 @@ export const AuthProvider: FC<any> = ({ children }) => {
 
     const logout = () => {
         Cookies.remove('token')
-        Cookies.remove('cart')
+        Cookies.remove('isLoggedIn')
         router.reload()
     }
 

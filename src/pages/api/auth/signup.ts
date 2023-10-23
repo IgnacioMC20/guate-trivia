@@ -22,7 +22,6 @@ export default async function (req: NextApiRequest, res: NextApiResponse<Data>) 
 const registerUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   const { email = '', password = '', name = '', avatar = '' } = req.body as { email: string, password: string, name: string, avatar: string }
-  console.log({ email, password, name, avatar })
   if (!isValidPassword(password)) {
     return res.status(400).json({
       message: 'La contraseña no es valida'

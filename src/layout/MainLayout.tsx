@@ -1,7 +1,8 @@
+'use client'
 import Head from 'next/head'
-import React, { FC } from 'react'
+import { FC } from 'react'
 
-import { Navbar, PrivateRoute, SideMenu } from '@/components'
+import { Navbar, SideMenu } from '@/components'
 
 interface Props {
     children: React.ReactNode
@@ -27,9 +28,7 @@ export const MainLayout: FC<Props> = ({ children, title, pageDescription }) => {
                 padding: '10px',
                 height: 'auto',
             }}>
-                <PrivateRoute>
-                    {children}
-                </PrivateRoute>
+                {children}
             </main>
 
             <footer>
