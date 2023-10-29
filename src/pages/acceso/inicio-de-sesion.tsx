@@ -42,11 +42,12 @@ const LoginPage: NextPage = () => {
         router.replace('/')
     }
 
-    const emailInputRef = useRef(null)
+    const emailInputRef = useRef<HTMLInputElement | null>(null)
 
     useEffect(() => {
-        // Enfoca el campo de entrada de correo cuando el componente se monta
-        emailInputRef.current.focus()
+        if (emailInputRef.current) {
+            emailInputRef.current.focus()
+          }
     }, [])
 
     useEffect(() => {
