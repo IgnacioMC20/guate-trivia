@@ -8,3 +8,11 @@ export interface IQuestion {
     correcta: string
   }
 }
+
+export interface IQuestionFE {
+  idPregunta: string;
+  pregunta: string;
+  respuestas: {
+      [key: string]: string;
+  };
+}

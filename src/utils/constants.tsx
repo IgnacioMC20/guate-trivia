@@ -7,7 +7,7 @@ export const links = [
 
 export const dashboardImages = [
     { src: '/jaguar.png', alt: 'Jaguar', color: '#BDB2FF' },
-    { src: '/play.png', alt: 'Boton de play', href: '/jugar/1', color: '#FFD6A5' },
+    { src: '/play.png', alt: 'Boton de play', href: '/jugar', color: '#FFD6A5' },
 ]
 
 export const images = [
