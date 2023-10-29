@@ -1,9 +1,7 @@
-import { ArrowUpward } from '@mui/icons-material'
 import DiamondIcon from '@mui/icons-material/Diamond'
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
-import { Box, Card, Container, Fab, Grid, Icon, Modal, Typography } from '@mui/material'
+import { Card, Fab, Grid, Modal, Typography } from '@mui/material'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export const FabButton = () => {
     const [open, setOpen] = useState(false)
@@ -18,66 +16,58 @@ export const FabButton = () => {
 
     return (
         <>
-            <Fab variant="circular" color='secondary' sx={{
+            <Fab variant="circular" color='info' sx={{
                 position: 'fixed',
                 bottom: '20px',
                 right: '20px'
             }} onClick={handleOpen}>
-                <DiamondIcon/>
-            </Fab>            
+                <DiamondIcon />
+            </Fab>
             <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
-            >               
-                <Card sx={{ backgroundColor: '#FDFFB6', width: '300px', height: '550px', marginBottom: '15px', borderStyle: 'solid', borderColor: 'black', borderWidth: '1px' }}>                    
-                    <Grid container sx={{ width: '80%' }} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-                    <Grid item>
-                        <Typography variant="h1" component="h2">
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
+                <Card sx={{ backgroundColor: '#FDFFB6', width: '100%', maxWidth: '300px', height: 'auto', marginBottom: '15px', borderStyle: 'solid', borderColor: 'black', borderWidth: '1px' }}>
+                    <Grid container sx={{ width: '100%', padding: '15px' }} display={'flex'} alignItems={'center'} justifyContent={'center'} flexDirection="column">
+                        <Typography textAlign={'center'} variant="h4" my={2}>
                             Insignias
                         </Typography>
-                    </Grid>
-                    </Grid>
-                    <Grid container sx={{ width: '80%' }} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-                        <Grid item>
-                            <Image src='/icons8-diamon.png'
-                                alt=''
-                                width={50}
-                                height={50}></Image>
-                            <Typography variant="h4" component="p">
-                                3 x Diamantes
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Image src='/icons8-coin-64.png'
-                                alt=''
-                                width={50}
-                                height={50}></Image>
-                            <Typography variant="h4" component="p">
-                                3 x Oro
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Image src='/icons8-coin-64-silver.png'
-                                alt=''
-                                width={50}
-                                height={50}></Image>
-                           <Typography variant="h4" component="p">
-                                3 x Plata
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Image src='/icons8-coin-64-bronce.png'
-                                alt=''
-                                width={50}
-                                height={50}></Image>
-                            <Typography variant="h4" component="p">
-                                3 x Bronce
-                            </Typography>
+                        <Grid item sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '10px', my: '2px' }}>
+                            <Grid item  display={'flex'} flexDirection={'column'} alignItems={'center'} my={1}>
+                                <Image src='/icons8-diamon.png' alt='' width={50} height={50} />
+                                <Typography variant="h5" component="p">
+                                    3 x Diamantes
+                                </Typography>
+                            </Grid>
+                            <Grid item  display={'flex'} flexDirection={'column'} alignItems={'center'} my={1}>
+                                <Image src='/icons8-coin-64.png' alt='' width={50} height={50} />
+                                <Typography variant="h5" component="p">
+                                    3 x Oro
+                                </Typography>
+                            </Grid>
+                            <Grid item  display={'flex'} flexDirection={'column'} alignItems={'center'} my={1}>
+                                <Image src='/icons8-coin-64-silver.png' alt='' width={50} height={50} />
+                                <Typography variant="h5" component="p">
+                                    3 x Plata
+                                </Typography>
+                            </Grid>
+                            <Grid item  display={'flex'} flexDirection={'column'} alignItems={'center'} my={1}>
+                                <Image src='/icons8-coin-64-bronce.png' alt='' width={50} height={50} />
+                                <Typography variant="h5" component="p">
+                                    3 x Bronce
+                                </Typography>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Card>
+
             </Modal>
         </>
     )

@@ -1,5 +1,10 @@
 import { Dashboard, Diversity3 } from '@mui/icons-material'
 
+import jaguar from '/public/jaguar.jpeg'
+import perro from '/public/perro.jpeg'
+import palomas from '/public/palomas.jpeg'
+import tucanes from '/public/tucanes.jpeg'
+
 export const links = [
     { href: '/', label: 'Inicio', icon: <Dashboard /> }, 
     { href: '/amigos', label: 'Amigos', icon: <Diversity3 /> },
@@ -11,8 +16,8 @@ export const dashboardImages = [
 ]
 
 export const images = [
-    { id: 1, src: '/jaguar.jpeg' },
-    { id: 2, src: '/perro.jpeg' },
-    { id: 3, src: '/palomas.jpeg' },
-    { id: 4, src: '/tucanes.jpeg' },
+    { id: 1, src: jaguar },
+    { id: 2, src: perro },
+    { id: 3, src: palomas },
+    { id: 4, src: tucanes },
 ]
