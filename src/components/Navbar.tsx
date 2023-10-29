@@ -25,6 +25,7 @@ const ButtonLink = ({ href, children, pathname }: ButtonLinkProps) => {
             passHref
             sx={{
                 border: `1px solid ${pathname === href ? '#fff' : '#000'}`,
+                margin: '0 0.5rem'
             }}
         >
             {children}
