@@ -21,9 +21,9 @@ export const Userbar = () => {
                 </Grid>
                 <Grid item sm={6} xs={12} display={'flex'} alignItems={'center'} sx={{ justifyContent: { xs: 'center', sm: 'end' } }}>
                     <Grid item sx={{ display: 'flex', borderRadius: '5px', backgroundColor: '#FDFFB6', padding: '15px', alignItems: 'center', margin: { xs: '10px 0 10px 0', sm: '0 10px 0 0' } }}>
-                        <EmojiEventsIcon sx={{ fontSize: 64 }} />
+                        <EmojiEventsIcon sx={{ fontSize: 64 }}/>
                         <Divider orientation="vertical" flexItem sx={{ padding: '5px', marginRight: '15px' }} />
-                        <InputLabel>2,000 pts.</InputLabel>
+                        <InputLabel>2,000 pts.</InputLabel>                        
                     </Grid>
                 </Grid>
             </Grid>
