@@ -5,7 +5,7 @@ import { MainLayout } from '@/layout'
 const AmigosPage = () => {
   return (
     <MainLayout title='Amigos' pageDescription='Amigos'>
-        <div>Amigos</div>
+        <div>Amigos</div>       
     </MainLayout>
   )
 }

@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 import NextLink from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { AuthContext } from '@/context'
@@ -15,16 +15,24 @@ import logoImage from '/public/logo.png'
 type FormData = {
     email: string,
     password: string,
+    remember: boolean
 }
 
 const LoginPage: NextPage = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>()
     const { loginUser } = useContext(AuthContext)
     const router = useRouter()
+    const [isRemember, setIsRemember] = useState(false)
 
-    const onLoginUser = async ({ email, password }: FormData) => {
+    const onLoginUser = async ({ email, password, remember }: FormData) => {
         const isValidLogin = await loginUser(email, password)
+        if (remember) {
+            localStorage.setItem('email', email)
+        } else {
+            // Si el checkbox no está seleccionado, elimina el correo del localStorage
+            localStorage.removeItem('email')
+        }
 
         if (!isValidLogin) {
             showToast('Credenciales incorrectas')
@@ -33,6 +41,15 @@ const LoginPage: NextPage = () => {
 
         router.replace('/')
     }
+
+    useEffect(() => {
+        const storedEmail = localStorage.getItem('email')
+        if (storedEmail) {
+            // Si hay un correo almacenado, establece su valor en el formulario
+            setValue('email', storedEmail)
+            setIsRemember(true)
+        }
+    }, [setValue])
 
     return (
         <AuthLayout title={'Login'}>
@@ -93,25 +110,31 @@ const LoginPage: NextPage = () => {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <FormControlLabel
-                                        control={<Checkbox value="remember" color='primary' sx={{
-                                            '&.Mui-checked': {
-                                                '& .MuiSvgIcon-root': {
-                                                    backgroundColor: 'white',
+                                        control={<Checkbox
+                                            value="remember"
+                                            color='primary'
+                                            checked={isRemember}
+                                            {...register('remember')}
+                                            onChange={(e) => setIsRemember(e.target.checked)}
+                                            sx={{
+                                                '&.Mui-checked': {
+                                                    '& .MuiSvgIcon-root': {
+                                                        backgroundColor: 'white',
+                                                    },
                                                 },
-                                            },
-                                        }} />}
+                                            }} />}
                                         label="Recuérdame"
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Button type='submit' size='large' fullWidth>Ingresar</Button>
                                 </Grid>
-                                <Grid item xs={12} display='flex' justifyContent='space-around'>
-                                    <NextLink href={'/acceso/recuperar-credenciales'} passHref legacyBehavior>
+                                <Grid item xs={12} display='flex' justifyContent='end'>
+                                    {/* <NextLink href={'/acceso/recuperar-credenciales'} passHref legacyBehavior>
                                         <Link underline='hover'>
                                             Olvidaste tu Contraseña
                                         </Link>
-                                    </NextLink>
+                                    </NextLink> */}
 
                                     <NextLink href={router.query.p ? `/acceso/crear-cuenta?p=${router.query.p.toString()}` : '/acceso/crear-cuenta'} passHref legacyBehavior>
                                         <Link underline='hover'>
