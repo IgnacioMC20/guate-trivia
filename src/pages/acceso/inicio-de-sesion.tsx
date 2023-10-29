@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 import NextLink from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { AuthContext } from '@/context'
@@ -41,6 +41,13 @@ const LoginPage: NextPage = () => {
 
         router.replace('/')
     }
+
+    const emailInputRef = useRef(null)
+
+    useEffect(() => {
+        // Enfoca el campo de entrada de correo cuando el componente se monta
+        emailInputRef.current.focus()
+    }, [])
 
     useEffect(() => {
         const storedEmail = localStorage.getItem('email')
@@ -80,6 +87,7 @@ const LoginPage: NextPage = () => {
                                 <Grid item xs={12}>
                                     <TextField
                                         sx={{ backgroundColor: 'white' }}
+                                        inputRef={emailInputRef}
                                         label='Correo'
                                         type='email'
                                         variant='outlined'
