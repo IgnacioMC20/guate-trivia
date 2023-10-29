@@ -24,6 +24,7 @@ const LoginPage: NextPage = () => {
     const { loginUser } = useContext(AuthContext)
     const router = useRouter()
     const [isRemember, setIsRemember] = useState(false)
+    const [defaultEmail, setDefaultEmail] = useState('')
 
     const onLoginUser = async ({ email, password, remember }: FormData) => {
         const isValidLogin = await loginUser(email, password)
@@ -56,6 +57,7 @@ const LoginPage: NextPage = () => {
             // Si hay un correo almacenado, establece su valor en el formulario
             setValue('email', storedEmail)
             setIsRemember(true)
+            setDefaultEmail(storedEmail)
         }
     }, [setValue])
 
@@ -92,6 +94,7 @@ const LoginPage: NextPage = () => {
                                         label='Correo'
                                         type='email'
                                         variant='outlined'
+                                        defaultValue={defaultEmail}
                                         fullWidth
                                         {...register('email', {
                                             required: 'Este campo es requerido',
