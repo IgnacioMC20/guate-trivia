@@ -1,12 +1,12 @@
 import { Menu } from '@mui/icons-material'
-import { AppBar, Box, Toolbar, Button, Avatar, Typography, IconButton } from '@mui/material'
+import { AppBar, Box, Toolbar, Button, Typography, IconButton } from '@mui/material'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext } from 'react'
 
-import { links } from '@/utils'
-import { UIContext } from '@/context'
+import { images, links } from '@/utils'
+import { AuthContext, UIContext } from '@/context'
 
 import logoImage from '/public/logo.png'
 
@@ -25,6 +25,7 @@ const ButtonLink = ({ href, children, pathname }: ButtonLinkProps) => {
             passHref
             sx={{
                 border: `1px solid ${pathname === href ? '#fff' : '#000'}`,
+                margin: '0 0.5rem'
             }}
         >
             {children}
@@ -33,16 +34,17 @@ const ButtonLink = ({ href, children, pathname }: ButtonLinkProps) => {
 }
 
 export const Navbar = () => {
-    const { toggleSideMenu, isMenuOpen } = useContext(UIContext)
-    console.log({ isMenuOpen })
+    const { toggleSideMenu } = useContext(UIContext)
+    const { user } = useContext(AuthContext)
+    const userImage = images.find(image => image.id === parseInt(user?.avatar!))?.src
     const router = useRouter()
-    // console.log(router)
 
     return (
         <AppBar sx={{ backgroundColor: '#A0C4FF', height: '110px' }} position="static">
             <Toolbar sx={{ height: '100%' }}>
                 {/* Logo  */}
                 <Image
+                    priority
                     src={logoImage}
                     alt="Logo Guate-Trivia"
                     width={100}
@@ -68,24 +70,24 @@ export const Navbar = () => {
 
                 <Box flex={1} />
 
-                {/* Menu para pantallas chiquitas */}
-                <IconButton sx={{ display: { xs: '', sm: 'none' } }} onClick={toggleSideMenu}>
-                    <Menu />
+                {/* Avatar */}
+                {
+                    userImage && (
+                        <Image
+                            priority
+                            src={userImage}
+                            width={75}
+                            height={75}
+                            alt={`Image ${user?.avatar!}`}
+                            className="user-image"
+                            style={{ borderRadius: '50%' }}
+                        />
+                    )
+                }
+                <IconButton onClick={toggleSideMenu}>
+                    <Menu sx={{ fontSize: 45 }} />
                 </IconButton>
 
-                {/* Avatar */}
-                <Avatar
-                    sx={{
-                        width: { xs: 50, sm: 75 },
-                        height: { xs: 50, sm: 75 },
-                        backgroundColor: '#fdc500', // Color de fondo similar a Google
-                        fontSize: '1.5rem', // Tamaño de la letra
-                        fontWeight: 'bold', // Estilo de la letra
-                        marginRight: '1rem', // Margen izquierdo
-                    }}
-                >
-                    G
-                </Avatar>
             </Toolbar>
         </AppBar>
     )

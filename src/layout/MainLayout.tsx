@@ -1,8 +1,8 @@
+'use client'
 import Head from 'next/head'
-import React, { FC } from 'react'
+import { FC } from 'react'
 
-import { Navbar } from '@/components'
-import { SideMenu } from '@/components/SideMenu'
+import { Navbar, SideMenu } from '@/components'
 
 interface Props {
     children: React.ReactNode

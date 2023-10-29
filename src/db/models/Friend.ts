@@ -1,37 +1,14 @@
-import { DataTypes, Model, Sequelize } from 'sequelize'
+import mongoose, { model, Schema, Model } from 'mongoose'
 
-class Friend extends Model {
-  public id!: number
-  public user_id_1!: number
-  public user_id_2!: number
+import { IFriend } from '@/interfaces'
 
-  static initialize(sequelize: Sequelize) {
-    this.init(
-      {
-        id: {
-          type: DataTypes.INTEGER,
-          autoIncrement: true,
-          primaryKey: true,
-        },
-        user_id_1: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-        user_id_2: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-      },
-      {
-        sequelize,
-        modelName: 'friends',
-        tableName: 'friends',
-        timestamps: false,
-        charset: 'utf8mb4',
-        collate: 'utf8mb4_unicode_ci',
-      }
-    )
-  }
-}
+const friendSchema = new Schema({
+  user_id_1: { type: String, required: true },
+  user_id_2: { type: String, required: true, unique: true },
+}, {
+  timestamps: true
+})
+
+const Friend: Model<IFriend> = mongoose.models.Friend || model('Friend', friendSchema)
 
 export default Friend

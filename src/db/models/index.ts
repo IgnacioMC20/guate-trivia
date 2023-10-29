@@ -1,6 +1,2 @@
-// export * as AmigoModel  from './Amigo'
-// export * as UsuarioModel from './Usuario'
-
-import User from './User'
-
-export { User }
+export { default as User } from './User'
+export { default as Question } from './Question'

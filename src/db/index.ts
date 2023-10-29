@@ -1,12 +1,7 @@
-import { Sequelize } from 'sequelize'
+// export * from './seedData'
+// export * from './constants'
 
 export * as db from './db'
+export * as dbQuestion from './dbQuestion'
 
-export const sequelize = new Sequelize({
-    dialect: 'mysql',
-    host: 'localhost',
-    port: 3306,
-    username: 'root',
-    password: process.env.MYSQL_ROOT_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
-  })
+// export * as dbUsers from './dbUsers'
