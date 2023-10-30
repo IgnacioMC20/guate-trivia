@@ -30,9 +30,6 @@ const LoginPage: NextPage = () => {
         const isValidLogin = await loginUser(email, password)
         if (remember) {
             localStorage.setItem('email', email)
-        } else {
-            // Si el checkbox no está seleccionado, elimina el correo del localStorage
-            localStorage.removeItem('email')
         }
 
         if (!isValidLogin) {
@@ -48,7 +45,7 @@ const LoginPage: NextPage = () => {
     useEffect(() => {
         if (emailInputRef.current) {
             emailInputRef.current.focus()
-          }
+        }
     }, [])
 
     useEffect(() => {
