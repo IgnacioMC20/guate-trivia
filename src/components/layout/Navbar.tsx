@@ -71,19 +71,22 @@ export const Navbar = () => {
                 <Box flex={1} />
 
                 {/* Avatar */}
-                {
-                    userImage && (
-                        <Image
-                            priority
-                            src={userImage}
-                            width={75}
-                            height={75}
-                            alt={`Image ${user?.avatar!}`}
-                            className="user-image"
-                            style={{ borderRadius: '50%' }}
-                        />
-                    )
-                }
+                <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
+
+                    {
+                        userImage && (
+                            <Image
+                                priority
+                                src={userImage}
+                                width={75}
+                                height={75}
+                                alt={`Image ${user?.avatar!}`}
+                                className="user-image"
+                                style={{ borderRadius: '50%' }}
+                            />
+                        )
+                    }
+                </Box>
                 <IconButton onClick={toggleSideMenu}>
                     <Menu sx={{ fontSize: 45 }} />
                 </IconButton>

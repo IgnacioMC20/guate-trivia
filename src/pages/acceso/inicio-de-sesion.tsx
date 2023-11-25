@@ -138,12 +138,12 @@ const LoginPage: NextPage = () => {
                                 <Grid item xs={12}>
                                     <Button type='submit' size='large' fullWidth>Ingresar</Button>
                                 </Grid>
-                                <Grid item xs={12} display='flex' justifyContent='end'>
-                                    {/* <NextLink href={'/acceso/recuperar-credenciales'} passHref legacyBehavior>
+                                <Grid item xs={12} display='flex' justifyContent='space-between'>
+                                    <NextLink href={'/acceso/recuperar-credenciales'} passHref legacyBehavior>
                                         <Link underline='hover'>
                                             Olvidaste tu Contraseña
                                         </Link>
-                                    </NextLink> */}
+                                    </NextLink>
 
                                     <NextLink href={router.query.p ? `/acceso/crear-cuenta?p=${router.query.p.toString()}` : '/acceso/crear-cuenta'} passHref legacyBehavior>
                                         <Link underline='hover'>
