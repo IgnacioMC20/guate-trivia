@@ -1,13 +1,14 @@
 import { AuthState } from './'
 import { IUser } from '../../interfaces'
 
-type AuthActionType = 
-   | { type: '[Auth] - Login', payload: IUser } 
-   | { type: '[Auth] - Logout' } 
+type AuthActionType =
+    | { type: '[Auth] - Login', payload: IUser }
+    | { type: '[Auth] - Logout' }
+    | { type: '[Friends] - Set Friend Ids', payload: string[] }
 
-export const authReducer = ( state: AuthState, action: AuthActionType ): AuthState => {
+export const authReducer = (state: AuthState, action: AuthActionType): AuthState => {
 
-   switch (action.type) {
+    switch (action.type) {
         case '[Auth] - Login':
             return {
                 ...state,
@@ -22,8 +23,14 @@ export const authReducer = ( state: AuthState, action: AuthActionType ): AuthSta
                 user: undefined,
             }
 
-       default:
-          return state
-   }
+        case '[Friends] - Set Friend Ids':
+            return {
+                ...state,
+                friendIds: [...state.friendIds, ...action.payload]
+            }
+
+        default:
+            return state
+    }
 
 }

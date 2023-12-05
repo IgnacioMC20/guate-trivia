@@ -20,14 +20,14 @@ export default async function (req: NextApiRequest, res: NextApiResponse<Data>) 
         await db.disconnect()
 
         if (!user) {
-            return res.status(400).json({ message: 'Tenemos problemas para encontrar este usuario' })
+            return res.status(404).json({ message: 'Tenemos problemas para encontrar este usuario' })
         }
 
-        const { name, avatar, email, level } = user
+        const { name, avatar, email, level, trophys } = user
 
         return res.status(200).json({
             userProfile: {
-                email, name, avatar, level
+                email, name, avatar, level, trophys, id: JSON.parse(JSON.stringify(user?.id))
             }
         })
     } catch (error) {

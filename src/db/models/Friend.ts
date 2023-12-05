@@ -4,7 +4,7 @@ import { IFriend } from '@/interfaces'
 
 const friendSchema = new Schema({
   user_id_1: { type: String, required: true },
-  user_id_2: { type: String, required: true, unique: true },
+  user_id_2: { type: String, required: true },
 }, {
   timestamps: true
 })

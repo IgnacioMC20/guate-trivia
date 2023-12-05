@@ -39,7 +39,7 @@ const ResetPasswordPage: NextPage = () => {
                                 md: '50%',
                             },
                             padding: '50px 50px',
-                            backgroundColor: '#FDFFB6',
+                            backgroundColor: '#f7f9fc',
                         }}
                     >
                         <form onSubmit={handleSubmit(onSubmit)} noValidate>

@@ -4,6 +4,7 @@ export interface IUser {
   email: string;
   password?: string;
   level: number;
+  trophys: number;
   avatar: string;
   resetPasswordToken?: string,
   resetPasswordExpires?: string,
@@ -13,10 +14,11 @@ export interface IUser {
 }
 
 export interface UserProfile {
-  id?: number;
+  id?: string;
   name: string;
   email: string;
   level: number;
   avatar: string;
+  trophys?: number;
   // ... otros campos de perfil
 }

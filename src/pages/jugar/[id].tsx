@@ -25,14 +25,12 @@ interface RespuestaItem {
 type SelectedValue = 'A' | 'B' | 'C'
 
 const PlayPage: React.FC<Props> = ({ pregunta, message, ok }) => {
-    
+
     const router = useRouter()
 
     useEffect(() => {
-        //set last question cookie  
         if (ok) {
             const lastQuestion = Number(router.query.id)
-            console.log(lastQuestion)
             Cookies.set('lastQuestion', lastQuestion.toString())
         }
     }, [router.query.id])
@@ -60,7 +58,6 @@ const PlayPage: React.FC<Props> = ({ pregunta, message, ok }) => {
         setSelectedValue(clave)
     }
 
-    //todo: verificar respuesta
     const onHandleSubmit = () => {
         if (!selectedValue) return showToast('Selecciona una respuesta')
 

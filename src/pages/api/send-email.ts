@@ -15,8 +15,8 @@ export default async function handler(
   res: NextApiResponse<ResponseData>
 ) {
   const { data, error } = await resend.emails.send({
-    from: 'ignacio.martinez@galileo.edu',
-    to: 'jm10cuyun@gmail.com',
+    from: 'jm10cuyun@gmail.com',
+    to: 'ignacio.martinez@galileo.edu',
     subject: 'Guate Trivia',
     react: EmailTemplate({ firstName: 'Ign' }),
   })

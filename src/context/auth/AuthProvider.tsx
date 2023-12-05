@@ -10,11 +10,13 @@ import { gtApi } from '@/utils'
 export interface AuthState {
     isLoggedIn: boolean;
     user?: IUser;
+    friendIds: string[];
 }
 
 const AUTH_INITIAL_STATE: AuthState = {
     isLoggedIn: false,
     user: undefined,
+    friendIds: []
 }
 
 export const AuthProvider: FC<any> = ({ children }) => {
@@ -34,7 +36,7 @@ export const AuthProvider: FC<any> = ({ children }) => {
             setIsLoggedIn(false)
             return
         }
-        if(!Cookies.get('isLoggedIn')) {
+        if (!Cookies.get('isLoggedIn')) {
             Cookies.remove('token')
             setIsLoggedIn(false)
             return
@@ -65,9 +67,8 @@ export const AuthProvider: FC<any> = ({ children }) => {
         } catch (error) {
             return false
         }
-        
     }
-    
+
     const registerUser = async ({ name, email, password, avatar }: RegisterUser): Promise<{ hasError: boolean; message?: string }> => {
         try {
             const { data } = await gtApi.post('/auth/signup', { name, email, password, avatar })
@@ -101,6 +102,11 @@ export const AuthProvider: FC<any> = ({ children }) => {
         router.reload()
     }
 
+    const setFriendIds = (friendIds: string[]) => {
+        dispatch({ type: '[Friends] - Set Friend Ids', payload: friendIds })
+    
+    }
+
     return (
         <AuthContext.Provider value={{
             ...state,
@@ -109,6 +115,7 @@ export const AuthProvider: FC<any> = ({ children }) => {
             loginUser,
             registerUser,
             logout,
+            setFriendIds
         }}>
             {children}
         </AuthContext.Provider>

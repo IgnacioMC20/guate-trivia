@@ -21,7 +21,11 @@ const ButtonLink = ({ href, children, pathname }: ButtonLinkProps) => {
         <Button
             component={NextLink}
             href={href}
-            color={pathname === href ? 'info' : 'secondary'}
+            color={
+                (pathname === href) ? 'info' :
+                    (pathname.includes('/jugar/') && href.includes('jugar')) ? 'info' : 'secondary'
+
+            }
             passHref
             sx={{
                 border: `1px solid ${pathname === href ? '#fff' : '#000'}`,
@@ -72,9 +76,8 @@ export const Navbar = () => {
 
                 {/* Avatar */}
                 <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-
                     {
-                        userImage && (
+                        userImage && router.pathname !== '/' && (
                             <Image
                                 priority
                                 src={userImage}
