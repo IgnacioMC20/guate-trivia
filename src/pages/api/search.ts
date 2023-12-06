@@ -8,7 +8,7 @@ type Data = { success: boolean, error?: string, message: string, users?: UserPro
 export default async function (req: NextApiRequest, res: NextApiResponse<Data>) {
     if (req.method !== 'GET') return res.status(403).json({ success: false, message: 'Metodo no permitido' })
 
-    const searchText = req.query.s // Get the search text from the query string
+    const searchText = req.query.s || '' // Get the search text from the query string
 
     //search for users
     try {
@@ -19,7 +19,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse<Data>) 
             ],
         })
 
-        if (users.length === 0) return res.status(200).json({ success: false, users: [], message: 'No se encontraron usuarios' })
+        if (!users || users.length === 0) return res.status(200).json({ success: false, users: [], message: 'No se encontraron usuarios' })
 
         const userFiltered = users.map(({
             name,
@@ -39,9 +39,9 @@ export default async function (req: NextApiRequest, res: NextApiResponse<Data>) 
             }
         })
 
-        res.status(200).json({ success: true, message: 'Todo bien!', users: userFiltered })
+        res.status(200).json({ success: true, message: 'Todo bien!', users: userFiltered})
     } catch (error: any) {
         console.log(error)
-        res.status(500).json({ success: false, error, message: 'Error al buscar usuarios' })
+        res.status(500).json({ success: false, error, message: 'Error al buscar usuarios'})
     }
 }
