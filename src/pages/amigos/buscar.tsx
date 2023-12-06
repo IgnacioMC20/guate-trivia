@@ -40,37 +40,53 @@ export default function buscarPage({ users, success, message, friendIds = [] }: 
 }
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-
     const s = ctx.query?.s || ''
 
-    if (s === '') return {
-        props: {
-            users: [],
-            message: 'No hay resultados',
+    if (s === '') {
+        return {
+            props: {
+                users: [],
+                message: 'No hay resultados',
+            },
         }
     }
 
-    const { data } = await gtApi.get(`/search?s=${s}`)
-    const { success, users, message } = data
-    const token = ctx.req.cookies.token || ''
-    const id = jwt.getId(token) || ''
-    const response = (await gtApi.get(`/friend?userId=${id}`)).data
-    const { data: _data } = response
+    try {
+        const { data } = await gtApi.get(`/search?s=${s}`)
+        const { success, users, message } = data
 
-    const filteredUsers = users?.filter((u: UserProfile) => u.id !== id)
+        const token = ctx.req.cookies.token || ''
+        const id = jwt.getId(token) || ''
 
-    if (!success) return {
-        props: {
-            users: [],
-            message
+        if (!success || !Array.isArray(users)) {
+            return {
+                props: {
+                    users: [],
+                    message: message || 'Hubo un problema al buscar usuarios',
+                },
+            }
         }
-    }
 
-    return {
-        props: {
-            users: filteredUsers,
-            friendIds: _data.friendIds,
-            success
+        const response = await gtApi.get(`/friend?userId=${id}`)
+        const { data: friendData } = response
+
+        const friendIds = friendData?.friendIds || []
+        const filteredUsers = users.filter((u: UserProfile) => u.id !== id)
+
+        return {
+            props: {
+                users: filteredUsers,
+                friendIds,
+                success,
+            },
+        }
+    } catch (error) {
+        console.error('Error:', error)
+        return {
+            props: {
+                users: [],
+                message: 'Hubo un error al procesar la solicitud',
+            },
         }
     }
 }
