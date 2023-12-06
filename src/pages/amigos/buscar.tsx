@@ -54,7 +54,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     }
 
     try {
-        const { data } = await axios.get(`/search?s=${s}`)
+        const { data } = await axios.get(`https://guate-trivia-ignaciomc20.vercel.app/api/search?s=${s}`)
         const { success, users, message } = data
 
         if(!success){
@@ -90,7 +90,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
             }
         }
 
-        const response = await axios.get(`/friend?userId=${id}`)
+        const response = await axios.get(`https://guate-trivia-ignaciomc20.vercel.app/api/friend?userId=${id}`)
         const { data: friendData } = response
 
         const friendIds = friendData?.friendIds || []
