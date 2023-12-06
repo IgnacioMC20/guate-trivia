@@ -12,8 +12,8 @@ export const Userbar = () => {
     return (
         <Card sx={{ backgroundColor: '#f7f9fc', width: '100%', marginBottom: '10px' }}>
             <Grid container display={'flex'} sx={{ width: '100%', height: '100%' }}>
-                <Grid item sm={6} xs={12} display={'flex'} flexDirection={'row'} >
-                    <Grid item display={'flex'} justifyContent={'center'} alignItems={'center'} sx={{ width: '30%' }}>
+                <Grid item sm={6} xs={12} display={'flex'} justifyContent={'center'} flexDirection={'row'} >
+                    <Grid item display={{xs: 'none', md: 'flex'}} justifyContent={'center'} alignItems={'center'} sx={{ width: '30%' }}>
                         {/* <AccountCircle style={{ fontSize: 100, }} /> */}
                         {
                             userImage && (

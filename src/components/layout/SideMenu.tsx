@@ -33,12 +33,12 @@ export const SideMenu = () => {
                 <Box display={'flex'} justifyContent={'center'} sx={{ padding: 5 }}>
                     <Avatar
                         sx={{
-                            width: { xs: 100, sm: 75 },
-                            height: { xs: 100, sm: 75 },
-                            display: { xs: 'flex', sm: 'none' }, // Ocultar en pantallas grandes
+                            width: { xs: 120, md: 75 },
+                            height: { xs: 120, md: 75 },
+                            display: { xs: 'flex', md: 'none' }, // Ocultar en pantallas grandes
                         }}
                     >
-                        <Image priority src={userImage} width={100} height={100} alt={`Image ${user?.avatar!}`} style={{ borderRadius: '50%' }} />
+                        <Image priority src={userImage} width={120} height={120} alt={`Image ${user?.avatar!}`} style={{ borderRadius: '50%' }} />
                     </Avatar>
                 </Box>
                 <List >
@@ -49,7 +49,7 @@ export const SideMenu = () => {
                                 onClick={() => navigateTo(href)}
                                 sx={{
                                     display: {
-                                        xs: '', sm: 'none'
+                                        xs: '', md: 'none'
                                     }
                                 }}
                             >
