@@ -58,7 +58,7 @@ export default async function handler(
 
             if (!friends || friends.length === 0) {
                 await db.disconnect()
-                return res.status(404).json({ success: false, message: 'No friends found' })
+                return res.status(200).json({ success: false, message: 'No friends found' })
             }
 
             const friendIds = friends

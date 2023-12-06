@@ -67,6 +67,15 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
             }
         }
 
+        if(users.length === 0) {
+            return {
+                props: {
+                    users: [],
+                    message: 'No hay resultados',
+                },
+            }
+        }
+
         const response = await gtApi.get(`/friend?userId=${id}`)
         const { data: friendData } = response
 
