@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material'
+import axios from 'axios'
 import { GetServerSideProps } from 'next'
 import React, { useContext, useEffect } from 'react'
 
@@ -6,7 +7,7 @@ import { UserModal, DataTable, NoFriends, SearchFriend } from '@/components'
 import { AuthContext } from '@/context'
 import { UserProfile } from '@/interfaces'
 import { MainLayout } from '@/layout'
-import { gtApi, jwt } from '@/utils'
+import { jwt } from '@/utils'
 
 interface Props {
   amigos?: UserProfile[]
@@ -48,7 +49,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     const token = ctx.req.cookies.token || ''
     const id = jwt.getId(token) || ''
-    const { data } = await gtApi.get(`/friend?userId=${id}`)
+    const { data } = await axios.get(`/friend?userId=${id}`)
     const { success, data: _data } = data
 
     // data contiene la respuesta del endpoint al que llamaste
