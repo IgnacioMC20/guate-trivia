@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material'
+import axios from 'axios'
 import { GetServerSidePropsContext } from 'next'
 import { useContext, useEffect } from 'react'
 
@@ -6,7 +7,7 @@ import { DataTable, NoFriends, SearchFriend, UserModal } from '@/components'
 import { AuthContext } from '@/context'
 import { UserProfile } from '@/interfaces'
 import { MainLayout } from '@/layout'
-import { gtApi, jwt } from '@/utils'
+import { jwt } from '@/utils'
 
 interface Props {
     users?: any[]
@@ -53,9 +54,9 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     }
 
     try {
-        const { data } = await gtApi.get(`/search?s=${s}`)
+        const { data } = await axios.get(`/search?s=${s}`)
         const { success, users, message } = data
-        
+
         if(!success){
             return {
                 props: {
@@ -89,7 +90,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
             }
         }
 
-        const response = await gtApi.get(`/friend?userId=${id}`)
+        const response = await axios.get(`/friend?userId=${id}`)
         const { data: friendData } = response
 
         const friendIds = friendData?.friendIds || []
