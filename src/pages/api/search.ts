@@ -39,9 +39,9 @@ export default async function (req: NextApiRequest, res: NextApiResponse<Data>) 
             }
         })
 
-        res.status(200).json({ success: true, message: 'Todo bien!', users: userFiltered, searchText: req.query.s })
+        res.status(200).json({ success: true, message: 'Todo bien!', users: userFiltered})
     } catch (error: any) {
         console.log(error)
-        res.status(500).json({ success: false, error, message: 'Error al buscar usuarios', searchText: req.query.s })
+        res.status(500).json({ success: false, error, message: 'Error al buscar usuarios'})
     }
 }
