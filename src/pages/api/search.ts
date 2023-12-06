@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
+import { db } from '@/db'
 import { User } from '@/db/models'
 import { UserProfile } from '@/interfaces'
 
@@ -14,15 +15,17 @@ export default async function (req: NextApiRequest, res: NextApiResponse<Data>) 
 
     try {
         if (typeof searchText !== 'string' || searchText.trim() === '') {
-            return res.status(400).json({ success: false, users: [], message: 'Ingrese un término de búsqueda válido' })
+            return res.status(200).json({ success: false, users: [], message: 'Ingrese un término de búsqueda válido' })
         }
-
+        
+        await db.connect()
         const users = await User.find({
             $or: [
                 { name: { $regex: searchText, $options: 'i' } },
                 { email: { $regex: searchText, $options: 'i' } },
             ],
         })
+        await db.disconnect()
 
         if (!Array.isArray(users) || users.length === 0) {
             return res.status(200).json({ success: false, users: [], message: 'No se encontraron usuarios' })

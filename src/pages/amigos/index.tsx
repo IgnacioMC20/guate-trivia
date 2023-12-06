@@ -65,7 +65,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     // Maneja cualquier error aquí
     return {
       props: {
-        dataFromServer: null, // O algún valor por defecto
+        amigos: [],
+        friendsIds: [],
+        success: false
       },
     }
   }
