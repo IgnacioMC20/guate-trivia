@@ -40,7 +40,26 @@ export const TrophyModal = () => {
                     justifyContent: 'center',
                 }}
             >
-                <Card sx={{ backgroundColor: '#FDFFB6', width: '100%', maxWidth: '300px', height: 'auto', marginBottom: '15px', position: 'relative' }}>
+                <Card sx={{
+                    backgroundColor: '#FDFFB6',
+                    width: '100%',
+                    maxWidth: '300px',
+                    height: 'auto',
+                    maxHeight: 'calc(100vh - 10%)',
+                    marginBottom: '15px',
+                    position: 'relative',
+                    overflow: 'auto', /* Usar overflow: auto en lugar de overflow: scroll */
+                    '&::-webkit-scrollbar': {
+                        width: '0.4rem', /* Ancho del scrollbar */
+                    },
+                    '&::-webkit-scrollbar-track': {
+                        background: 'transparent', /* Color del fondo del track */
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                        background: 'gray', /* Color del thumb del scrollbar */
+                        borderRadius: '0.2rem', /* Bordes del thumb */
+                    },
+                }}>
                     <Grid container sx={{ width: '100%', padding: '15px' }} display={'flex'} alignItems={'center'} justifyContent={'center'} flexDirection="column">
                         {/* <Typography textAlign={'center'} variant="h4" my={2}>
                             Insignias
