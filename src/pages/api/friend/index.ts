@@ -48,42 +48,48 @@ export default async function handler(
 
     const getFriends = async (req: NextApiRequest, res: NextApiResponse) => {
         const { userId } = req.query
-
+    
         try {
+            if (!userId || typeof userId !== 'string') {
+                return res.status(400).json({ success: false, message: 'ID de usuario inválido' })
+            }
+    
             await db.connect()
-
+    
             const friends = await Friend.find({
                 $or: [{ user_id_1: userId }, { user_id_2: userId }],
             })
-
-            if (!friends || friends.length === 0) {
+    
+            if (!Array.isArray(friends) || friends.length === 0) {
                 await db.disconnect()
-                return res.status(200).json({ success: false, message: 'No friends found' })
+                return res.status(200).json({ success: false, message: 'No se encontraron amigos' })
             }
-
+    
             const friendIds = friends
                 .map((friend) => [friend.user_id_1, friend.user_id_2])
                 .flat()
                 .filter((friendId) => friendId !== userId) // Excluir el ID del usuario actual
-
+    
             const usersArray = await User.find({ _id: { $in: friendIds } })
-
+    
             await db.disconnect()
-
-            if (!usersArray || usersArray.length === 0) {
-                return res.status(404).json({ success: false, message: 'No users found' })
+    
+            if (!Array.isArray(usersArray) || usersArray.length === 0) {
+                return res.status(200).json({ success: false, message: 'No se encontraron usuarios' })
             }
-
+    
             const usersArrayFiltered = usersArray.map(({ _id, name, email, trophys, level, avatar }) => {
                 return { id: _id, name, email, trophys, level, avatar }
             })
-
+    
+            console.log('usersArray', usersArrayFiltered)
+    
             res.status(200).json({ success: true, data: { usersArrayFiltered, friendIds } })
         } catch (error: any) {
-            res.status(500).json({ success: false, error: error.message })
+            res.status(500).json({ success: false, error: error.message, data: { usersArrayFiltered: [], friendIds: [] } })
         }
     }
-
+    
     switch (req.method) {
         case 'GET':
             return getFriends(req, res)

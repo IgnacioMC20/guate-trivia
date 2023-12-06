@@ -47,6 +47,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
             props: {
                 users: [],
                 message: 'No hay resultados',
+                success: false,
             },
         }
     }
@@ -54,6 +55,16 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     try {
         const { data } = await gtApi.get(`/search?s=${s}`)
         const { success, users, message } = data
+        
+        if(!success){
+            return {
+                props: {
+                    users: [],
+                    message: message || 'Hubo un problema al buscar usuarios',
+                    success
+                },
+            }
+        }
 
         const token = ctx.req.cookies.token || ''
         const id = jwt.getId(token) || ''
@@ -63,15 +74,17 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
                 props: {
                     users: [],
                     message: message || 'Hubo un problema al buscar usuarios',
+                    success
                 },
             }
         }
 
-        if(users.length === 0) {
+        if(users.length <= 0) {
             return {
                 props: {
                     users: [],
                     message: 'No hay resultados',
+                    success
                 },
             }
         }
@@ -95,6 +108,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
             props: {
                 users: [],
                 message: 'Hubo un error al procesar la solicitud',
+                success: false,
             },
         }
     }
