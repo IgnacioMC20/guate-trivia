@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { User } from '@/db/models'
 import { UserProfile } from '@/interfaces'
-import { jwt } from '@/utils'
 
 type Data = { success: boolean, error?: string, message: string, users?: UserProfile[] }
 
@@ -42,6 +41,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse<Data>) 
 
         res.status(200).json({ success: true, message: 'Todo bien!', users: userFiltered })
     } catch (error: any) {
+        console.log(error)
         res.status(500).json({ success: false, error, message: 'Error al buscar usuarios' })
     }
 }
