@@ -35,7 +35,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse<Data>) 
         return res.status(200).json({
             token, //jwt
             user: {
-                email, name, avatar
+                email, name, avatar, id: JSON.parse(JSON.stringify(_id))
             }
         })
     } catch (error) {

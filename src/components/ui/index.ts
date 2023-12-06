@@ -1,0 +1,7 @@
+export * from './BasicModal'
+export * from './TrophyModal'
+export * from './NoQuestion'
+export * from './UserModal'
+export * from './DataTable'
+export * from './NoFriends'
+export * from './SearchFriend'

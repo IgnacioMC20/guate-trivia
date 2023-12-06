@@ -1,9 +1,9 @@
-import { Button, Card, Checkbox, FormControlLabel, Grid, Link, TextField, Typography } from '@mui/material'
+import { Button, Card, Grid, Link, TextField, Typography } from '@mui/material'
 import { NextPage } from 'next'
 import NextLink from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { AuthContext } from '@/context'
@@ -20,17 +20,12 @@ type FormData = {
 
 const LoginPage: NextPage = () => {
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>()
+    const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
     const { loginUser } = useContext(AuthContext)
     const router = useRouter()
-    const [isRemember, setIsRemember] = useState(false)
-    const [defaultEmail, setDefaultEmail] = useState('')
 
-    const onLoginUser = async ({ email, password, remember }: FormData) => {
+    const onLoginUser = async ({ email, password }: FormData) => {
         const isValidLogin = await loginUser(email, password)
-        if (remember) {
-            localStorage.setItem('email', email)
-        }
 
         if (!isValidLogin) {
             showToast('Credenciales incorrectas')
@@ -47,16 +42,6 @@ const LoginPage: NextPage = () => {
             emailInputRef.current.focus()
         }
     }, [])
-
-    useEffect(() => {
-        const storedEmail = localStorage.getItem('email')
-        if (storedEmail) {
-            // Si hay un correo almacenado, establece su valor en el formulario
-            setValue('email', storedEmail)
-            setIsRemember(true)
-            setDefaultEmail(storedEmail)
-        }
-    }, [setValue])
 
     return (
         <AuthLayout title={'Login'}>
@@ -91,7 +76,6 @@ const LoginPage: NextPage = () => {
                                         label='Correo'
                                         type='email'
                                         variant='outlined'
-                                        defaultValue={defaultEmail}
                                         fullWidth
                                         {...register('email', {
                                             required: 'Este campo es requerido',
@@ -117,7 +101,7 @@ const LoginPage: NextPage = () => {
                                         helperText={errors.password?.message}
                                         autoComplete='false' />
                                 </Grid>
-                                <Grid item xs={12}>
+                                {/* <Grid item xs={12}>
                                     <FormControlLabel
                                         control={<Checkbox
                                             value="remember"
@@ -133,23 +117,23 @@ const LoginPage: NextPage = () => {
                                                 },
                                             }} />}
                                         label="Recuérdame"
-                                    />
-                                </Grid>
+                                    /> 
+                                </Grid>*/}
                                 <Grid item xs={12}>
                                     <Button type='submit' size='large' fullWidth>Ingresar</Button>
                                 </Grid>
                                 <Grid item xs={12} display='flex' justifyContent='end'>
-                                    {/* <NextLink href={'/acceso/recuperar-credenciales'} passHref legacyBehavior>
-                                        <Link underline='hover'>
-                                            Olvidaste tu Contraseña
-                                        </Link>
-                                    </NextLink> */}
 
                                     <NextLink href={router.query.p ? `/acceso/crear-cuenta?p=${router.query.p.toString()}` : '/acceso/crear-cuenta'} passHref legacyBehavior>
                                         <Link underline='hover'>
                                             No tienes cuenta?
                                         </Link>
                                     </NextLink>
+                                    {/* <NextLink href={'/acceso/recuperar-credenciales'} passHref legacyBehavior>
+                                        <Link underline='hover'>
+                                            Olvidaste tu Contraseña
+                                        </Link>
+                                    </NextLink> */}
                                 </Grid>
                             </Grid>
                         </form>

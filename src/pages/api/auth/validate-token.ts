@@ -54,7 +54,8 @@ const checkJWT = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         user: {
             email,
             avatar,
-            name
+            name,
+            id: JSON.parse(JSON.stringify(_id))
         }
     })
 

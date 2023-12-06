@@ -1,50 +1,72 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material'
-import React from 'react'
+import { Grid } from '@mui/material'
+import { GetServerSideProps } from 'next'
+import React, { useContext, useEffect } from 'react'
 
+import { UserModal, DataTable, NoFriends, SearchFriend } from '@/components'
+import { AuthContext } from '@/context'
+import { UserProfile } from '@/interfaces'
 import { MainLayout } from '@/layout'
+import { gtApi, jwt } from '@/utils'
 
-interface Amigo {
-  id: number
-  nombre: string
-  puntos: number
-  insignias: number
+interface Props {
+  amigos?: UserProfile[]
+  success: boolean
+  friendsIds?: string[]
 }
 
-const AmigosPage: React.FC = () => {
-  
-  const amigosData: Amigo[] = [
-    { id: 1, nombre: 'Juan', puntos: 1500, insignias: 3 },
-    { id: 2, nombre: 'Maria', puntos: 1200, insignias: 2 },
-    { id: 3, nombre: 'Carlos', puntos: 1800, insignias: 4 },
-    { id: 4, nombre: 'Ana', puntos: 1000, insignias: 1 },
-    { id: 5, nombre: 'Pedro', puntos: 2000, insignias: 5 },
-  ]
+const AmigosPage: React.FC<Props> = ({ success, amigos, friendsIds = [] }) => {
+
+  const { setFriendIds } = useContext(AuthContext)
+
+  useEffect(() => {
+    setFriendIds(friendsIds)
+  }, [])
 
   return (
     <MainLayout title='Amigos' pageDescription='Amigos'>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Cantidad de Puntos</TableCell>
-              <TableCell>Número de Insignias</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {amigosData.map((amigo) => (
-              <TableRow key={amigo.id}>
-                <TableCell>{amigo.id}</TableCell>
-                <TableCell>{amigo.nombre}</TableCell>
-                <TableCell>{amigo.puntos}</TableCell>
-                <TableCell>{amigo.insignias}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <UserModal />
+      <Grid container sx={{ height: { xs: 'auto', sm: 'calc(100vh - 130px)' }, padding: '50px 30px' }} display={'flex'} flexDirection={'column'}>
+        <SearchFriend title={'Amigos'} />
+        {
+          (success && amigos) ? (
+            <DataTable usuariosArray={amigos} />
+          ) : (
+            <NoFriends />
+          )
+        }
+      </Grid>
     </MainLayout>
   )
 }
 
 export default AmigosPage
+
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  try {
+    const token = ctx.req.cookies.token || ''
+    const id = jwt.getId(token) || ''
+    const { data } = await gtApi.get(`/friend?userId=${id}`)
+    const { success, data: _data } = data
+
+    // data contiene la respuesta del endpoint al que llamaste
+    // Haces algo con los datos, como pasarlos a props
+    return {
+      props: {
+        amigos: _data.usersArrayFiltered,
+        friendsIds: _data.friendIds,
+        success: success
+      },
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error)
+    // Maneja cualquier error aquí
+    return {
+      props: {
+        dataFromServer: null, // O algún valor por defecto
+      },
+    }
+  }
+}

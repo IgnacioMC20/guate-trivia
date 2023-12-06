@@ -12,10 +12,12 @@ export interface RegisterUser {
 interface ContextProps {
     isLoggedIn: boolean;
     user?: IUser;
+    friendIds: string[];
 
     loginUser: (email: string, password: string) => Promise<boolean>;
-    registerUser: ({name, email, password, avatar}: RegisterUser) => Promise<{ hasError: boolean; message?: string; }>;
+    registerUser: ({ name, email, password, avatar }: RegisterUser) => Promise<{ hasError: boolean; message?: string; }>;
     logout: () => void;
+    setFriendIds: (friendIds: string[]) => void;
 }
 
-export const AuthContext = createContext({} as ContextProps )
+export const AuthContext = createContext({} as ContextProps)

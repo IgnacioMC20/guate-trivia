@@ -21,7 +21,11 @@ const ButtonLink = ({ href, children, pathname }: ButtonLinkProps) => {
         <Button
             component={NextLink}
             href={href}
-            color={pathname === href ? 'info' : 'secondary'}
+            color={
+                (pathname === href) ? 'info' :
+                    (pathname.includes('/jugar/') && href.includes('jugar')) ? 'info' : 'secondary'
+
+            }
             passHref
             sx={{
                 border: `1px solid ${pathname === href ? '#fff' : '#000'}`,
@@ -71,19 +75,21 @@ export const Navbar = () => {
                 <Box flex={1} />
 
                 {/* Avatar */}
-                {
-                    userImage && (
-                        <Image
-                            priority
-                            src={userImage}
-                            width={75}
-                            height={75}
-                            alt={`Image ${user?.avatar!}`}
-                            className="user-image"
-                            style={{ borderRadius: '50%' }}
-                        />
-                    )
-                }
+                <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                    {
+                        userImage && router.pathname !== '/' && (
+                            <Image
+                                priority
+                                src={userImage}
+                                width={75}
+                                height={75}
+                                alt={`Image ${user?.avatar!}`}
+                                className="user-image"
+                                style={{ borderRadius: '50%' }}
+                            />
+                        )
+                    }
+                </Box>
                 <IconButton onClick={toggleSideMenu}>
                     <Menu sx={{ fontSize: 45 }} />
                 </IconButton>

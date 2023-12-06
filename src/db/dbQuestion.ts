@@ -5,7 +5,7 @@ import { Question } from './models'
 
 export const get = async (id: string) => {
 
-    const msInTwoDays = 2 * 24 * 60 * 60 * 1000 // 2 días en milisegundos
+    const msInTwoDays = 30 * 24 * 60 * 60 * 1000 // 2 días en milisegundos
 
     try {
         // Conectar a la base de datos
@@ -38,7 +38,7 @@ export const get = async (id: string) => {
 
             await newQuestion.save()
             await db.disconnect()
-            
+
             return newQuestion.toJSON()
         }
 
@@ -49,21 +49,26 @@ export const get = async (id: string) => {
 
         if (timeDifference > msInTwoDays) {
             // Realiza la solicitud al endpoint para obtener la pregunta actualizada
-            const response = await axios.get(`http://3.135.193.178/preguntas.php?id=${id}`)
-            const data = response.data
+            try {
+                const response = await axios.get(`http://3.135.193.178/preguntas.php?id=${id}`)
+                const data = response.data
 
-            // Verificar si se obtuvo la pregunta
-            if (data && data.pregunta && data.respuestas) {
-                // Actualiza la pregunta en la base de datos
-                question.pregunta = data.pregunta
-                question.respuestas = {
-                    A: data.respuestas.A,
-                    B: data.respuestas.B,
-                    C: data.respuestas.C,
-                    correcta: data.respuestas.correcta,
+                // Verificar si se obtuvo la pregunta
+                if (data && data.pregunta && data.respuestas) {
+                    // Actualiza la pregunta en la base de datos
+                    question.pregunta = data.pregunta
+                    question.respuestas = {
+                        A: data.respuestas.A,
+                        B: data.respuestas.B,
+                        C: data.respuestas.C,
+                        correcta: data.respuestas.correcta,
+                    }
+                    await question.save()
                 }
-                await question.save()
+            } catch (error) {
+                return question.toJSON()
             }
+
         }
 
         // Desconectar de la base de datos
