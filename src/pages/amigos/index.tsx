@@ -49,7 +49,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   try {
     const token = ctx.req.cookies.token || ''
     const id = jwt.getId(token) || ''
-    const { data } = await axios.get(`/friend?userId=${id}`)
+    const { data } = await axios.get(`https://guate-trivia-ignaciomc20.vercel.app/api/friend?userId=${id}`)
     const { success, data: _data } = data
 
     // data contiene la respuesta del endpoint al que llamaste
