@@ -9,6 +9,6 @@ export const NoFriends = ({ message }: Props) => {
   )
 
   return (
-    <div>Aun no tienes amigos</div>
+    <div>Aun no tienes amigos? Prueba buscando usuarios para agregarlos a tu lista de amigos :)</div>
   )
 }

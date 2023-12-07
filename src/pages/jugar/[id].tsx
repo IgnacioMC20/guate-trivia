@@ -71,8 +71,8 @@ const PlayPage: React.FC<Props> = ({ pregunta, message, ok }) => {
     return (
         <MainLayout pageDescription='Jugar' title='Jugar'>
             <BasicModal />
-            <Grid container sx={{ height: { xs: 'auto', sm: 'calc(100vh - 130px)' }, padding: { xs: '50px 10px', sm: '50px 200px' } }}>
-                <Grid item xs={12} sx={{ height: '100%' }} display={'flex'} justifyContent={'center'}>
+            <Grid container sx={{ height: { xs: 'calc(100vh - 130px)' }, padding: { xs: '50px 10px', md: '50px 200px' } }} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                <Grid item xs={12} sx={{ height: {xs: '100%'} }} display={'flex'} justifyContent={'center'}>
                     <fieldset style={{ background: '#FDFFB6', height: '100%', display: 'flex', flexWrap: 'wrap' }}>
                         <legend>Guate-Trivia</legend>
                         <Card sx={{ background: 'transparent', boxShadow: 'none', padding: { xs: '', sm: '50px' }, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>

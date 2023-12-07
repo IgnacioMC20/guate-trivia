@@ -30,7 +30,7 @@ export const SearchFriend = ({ title }: Props) => {
             >
                 <InputBase
                     sx={{ ml: 1, flex: 1 }}
-                    placeholder="Buscar amigos"
+                    placeholder="Buscar usuarios"
                     inputProps={{ 'aria-label': 'Buscar usuarios' }}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
