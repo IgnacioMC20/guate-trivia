@@ -5,7 +5,7 @@ import { Question } from './models'
 
 export const get = async (id: string) => {
 
-    const msInTwoDays = 30 * 24 * 60 * 60 * 1000 // 2 días en milisegundos
+    const msInTwoDays = 30 * 24 * 60 * 60 * 1000 // 30 días en milisegundos
 
     try {
         // Conectar a la base de datos
@@ -16,8 +16,13 @@ export const get = async (id: string) => {
 
         if (!question) {
             // La pregunta no existe en la base de datos, realiza la solicitud al endpoint
-            const response = await axios.get(`http://3.135.193.178/preguntas.php?id=${id}`)
+            const response = await axios.get(`http://52.37.29.183/preguntas.php?nivel=${id}`)
+            console.log(response)
             const data = response.data
+
+            if(data.error){
+                throw new Error(data.error)
+            }
 
             // Verificar si se obtuvo la pregunta
             if (!data || !data.pregunta || !data.respuestas) {
@@ -50,7 +55,7 @@ export const get = async (id: string) => {
         if (timeDifference > msInTwoDays) {
             // Realiza la solicitud al endpoint para obtener la pregunta actualizada
             try {
-                const response = await axios.get(`http://3.135.193.178/preguntas.php?id=${id}`)
+                const response = await axios.get(`http://52.37.29.183/preguntas.php?nivel=${id}`)
                 const data = response.data
 
                 // Verificar si se obtuvo la pregunta
