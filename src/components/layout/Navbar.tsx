@@ -75,7 +75,7 @@ export const Navbar = () => {
                 <Box flex={1} />
 
                 {/* Avatar */}
-                <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                     {
                         userImage && router.pathname !== '/' && (
                             <Image
