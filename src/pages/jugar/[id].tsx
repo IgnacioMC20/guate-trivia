@@ -116,7 +116,7 @@ export default PlayPage
 
 export const getStaticPaths: GetStaticPaths = async () => {
     let paths: any = []
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 10; i++) {
         paths = [...paths, { params: { id: i.toString() } }]
     }
 
